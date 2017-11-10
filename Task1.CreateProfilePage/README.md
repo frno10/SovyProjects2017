@@ -19,17 +19,17 @@ Create user profile web page for each team member. Each team member will create 
 ### Sources
 
 #### Responsive Web Design
-[Google - Responsive Web Design Basics](https://developers.google.com/web/fundamentals/design-and-ux/responsive/)
-[W3School - Responsive Web Design](https://www.w3schools.com/html/html_responsive.asp)
+[Google - Responsive Web Design Basics](https://developers.google.com/web/fundamentals/design-and-ux/responsive/)  
+[W3School - Responsive Web Design](https://www.w3schools.com/html/html_responsive.asp)  
 
 #### HTML reference
-[Mozilla - HTML elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)
-[W3School - HTML5 Tutorial](https://www.w3schools.com/html/)
+[Mozilla - HTML elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)  
+[W3School - HTML5 Tutorial](https://www.w3schools.com/html/)  
 
 #### CSS reference
-[Mozilla - CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
-[W3School - CSS](https://www.w3schools.com/css/)
+[Mozilla - CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)  
+[W3School - CSS](https://www.w3schools.com/css/)  
 
 #### JavaScript reference
-[W3School - JavaScript tutorial](https://www.w3schools.com/js/default.asp)
-[TutorialsPoint - JavaScript Online Training](https://www.tutorialspoint.com//javascript_online_training/index.asp)
+[W3School - JavaScript tutorial](https://www.w3schools.com/js/default.asp)  
+[TutorialsPoint - JavaScript Online Training](https://www.tutorialspoint.com//javascript_online_training/index.asp)  
