@@ -1,90 +1,82 @@
 // https://github.com/mapbox/node-sqlite3/blob/master/examples/simple-chaining.js
+var fs = require('fs');
 var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('clovece.db');
+var helpers = require('./sqlite.helpers');
 
-function createParametersListForCreateTableQuery(parameters) {
-    var query = "";
-    for (var i = 0; i < parameters.length; i++) {
-        query += parameters[i].name + " " + parameters[i].type + (i+1 == parameters.length ? "" : ",");
-    }
-    return query;
-}
 
-function createParametersListForSelectQuery(parameters) {
-    var query = "";
-    for (var i = 0; i < parameters.length; i++) {
-        query += parameters[i].name + " " + (i+1 == parameters.length ? "" : ",");
-    }
-    return query;
-}
+function ensureTable(dbConn, tableName, parameters, successHandler) {
+    dbConn.serialize(function() {  
+        var paramsQuery = helpers.paramsQueryForCreate(parameters);
+        var tableExists = false;
+        dbConn.get("SELECT count(*) as count FROM sqlite_master WHERE type='table' AND name='" + tableName + "'", function (error, row) {
+            tableExists = row.count > 0;
+            console.log("Table " + tableName + ": " + (tableExists ? "exists" : "does not exist"));
+            if(!tableExists) {
+                dbConn.run("CREATE TABLE " + tableName + " (" + paramsQuery + ")");  //" (id INT, dt TEXT)");   
+                console.log("Creating table" + tableName);
+            }
 
-function createParametersPlaceholderForInsertQuery(parameters) {
-    var query = "";
-    for (var i = 0; i < parameters.length; i++) {
-        query += "?" + (i+1 == parameters.length ? "" : ",");
-    }
-    return query;
-}
-
-//exports.ensureTable = 
-function ensureTable(tableName, parameters) {
-    db.serialize(function() {  
-        var paramsQuery = createParametersListForCreateTableQuery(parameters);
-        var tableExists = db.get("SELECT count(*) as count FROM sqlite_master WHERE type='table' AND name='" + tableName + "'", function (error, row) {
-            if(row.count == 0) {
-                db.run("CREATE TABLE " + tableName + " (" + paramsQuery + ")");  //" (id INT, dt TEXT)");   
+            if(successHandler && typeof successHandler === "function") {
+                successHandler(dbConn);
             }
         });
-
-        var insertParametersList = createParametersPlaceholderForInsertQuery(parameters);
-        var statement = db.prepare("INSERT INTO " + tableName + " VALUES (" + insertParametersList + ")");  
-
-        for (var i = 0; i < 10; i++) {  
-            var d = new Date();  
-            var n = d.toLocaleTimeString();  
-            statement.run(i, n);  
-        }  
-        statement.finalize();  
-        
-        var listParams = createParametersListForSelectQuery(65, parameters);
-        db.each("SELECT " + listParams + " FROM " + tableName + "", function(err, row) {  
-            //console.log("Row : " + row.id, row.dt);  
-        });  
     });  
-    
-    db.close(); 
 }
 
-function insertData(tableName, data) {
-    db.serialize(function() {  
-        var insertParametersList = createParametersPlaceholderForInsertQuery(parameters);
-        var statement = db.prepare("INSERT INTO " + tableName + " VALUES (" + insertParametersList + ")");  
+function insertData(dbConn, tableName, data, successHandler) {
+    dbConn.serialize(function() {  
+        var insertParametersList = helpers.paramsQueryForInsert(data);
+        var statement = dbConn.prepare("INSERT INTO " + tableName + " VALUES (" + insertParametersList + ")");  
 
         for (var i = 0; i < data.length; i++) {  
             statement.run(data[i]);  
         }  
         statement.finalize();  
+
+        if(successHandler && typeof successHandler === "function") {
+            successHandler(dbConn);
+        }
     });  
-    
-    db.close(); 
 }
 
-function listAllData(tableName, parameters) {
-    db.serialize(function() {  
-        var listParams = createParametersListForSelectQuery(65, parameters);
-        db.each("SELECT " + listParams + " FROM " + tableName + "", function(err, row) {  
+function selectAllData(dbConn, tableName, parameters, successHandler) {
+    dbConn.serialize(function() {  
+        var listParams = helpers.paramsQueryForSelect(parameters);
+        dbConn.each("SELECT " + listParams + " FROM " + tableName + "", function(err, row) {  
             var stringData = "";
             for(var i = 0; i < parameters.length; i++) {
-                stringData += row["\"" + parameters[i].name + "\""] + ",";
+                stringData += row[parameters[i].name] + ",";
             }
             console.log("Row : " + stringData);  
         });    
+        if(successHandler && typeof successHandler === "function") {
+            successHandler(dbConn);
+        }
     });  
-    
-    db.close();
 }
 
 var paramsForFunc = [{name: "id", type: "INT"}, {name: "dt", type: "TEXT"}];
-ensureTable("users", paramsForFunc);
-insertData("users", [[1, "first"], [2, "second"]]);
-listAllData("users", paramsForFunc);
+var usersTableName = "users";
+
+
+// if(fs.exists('./data/clovece.db')) {
+//     console.log('Deleting DB');
+//     fs.unlinkSync('./data/clovece.db');
+// }
+
+try
+{
+    var db = new sqlite3.Database('./data/clovece.db');
+    ensureTable(db, usersTableName, paramsForFunc, function(db) {
+        var d = new Date();  
+        var n = d.toLocaleTimeString();
+        insertData(db, usersTableName, [[1, n], [2, "second"]], function(db) {
+            selectAllData(db, usersTableName, paramsForFunc);
+            db.close();
+        });
+    });
+}
+catch(exception) 
+{
+    db.close();
+}
