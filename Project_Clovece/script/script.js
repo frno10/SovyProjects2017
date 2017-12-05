@@ -82,3 +82,35 @@ function start()
        myBlock.className = classname;
        document.getElementById("content").appendChild(myBlock);
      }
+
+
+     function setLogin()
+     {
+        var myLogin;
+        myLogin=document.createElement('div');
+        myLogin.id='login';
+        myLogin.classname='csslogin';
+        myLogin.style.width='200px';
+        myLogin.style.height='200px';
+        myLogin.style.background='lightblue';  
+        document.getElementById('content').style.margin='0 auto';     
+        document.getElementById('content').appendChild(myLogin);
+
+        var label=document.createElement('label');
+        label.htmlFor="text";
+        label.innerHTML="Your name: ";
+        document.getElementById('login').appendChild(label);
+
+        var input=document.createElement("INPUT");
+        input.type='text';
+        document.getElementById('login').appendChild(input);
+
+        var eol=document.createElement('br');
+        document.getElementById('login').appendChild(eol);
+
+        var button=document.createElement('button');
+        button.style.width = "50px";
+        button.style.height = "25px";
+        button.innerHTML='OK';
+        document.getElementById('login').appendChild(button);
+     }
