@@ -2,7 +2,7 @@
 {
   width: 40px;
   height: 40px;
-  margin: 14px;
+  margin: 6px;
   float: left;
 }
 .red
@@ -32,6 +32,6 @@
 
 #content
 {
-  width: 755px;
-  height: 755px;
+  width: 600px;
+  height: 600px;
 }
