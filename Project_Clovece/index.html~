@@ -6,12 +6,21 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="script/script.js"></script>
     </head>
+	<body>
+		<div id="head">
+			<table>
+				<tr>
+					<td><h1 id="active"></h1></td>
+					<td><h2 id="round"></h2></td>
+				</tr>
+			</table>
+		</div>
 		<div id="content">
 
 		</div>
 
 		<script>
-    		generateGameboard();
+    start();
 		</script>
 
 	</body>

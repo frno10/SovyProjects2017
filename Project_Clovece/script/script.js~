@@ -49,7 +49,7 @@ function generateGameboard()
        elementClass = gameboardClass[i][j];
        elementID = gameboardID[i][j];
        elementDATA = gameboardDATA[i][j];
-       createBoardElement("content", elementID, elementClass, elementDATA);
+       CreateBoardElement("content", elementID, elementClass, elementDATA);
      }
     }
 }
