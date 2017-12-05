@@ -14,9 +14,20 @@ exports.get = function(req, res) {
       res.write(data, 'utf8');
       res.end();
     });
+  } else if (/.(js)$/.test(path)) {
+    res.writeHead(200, {
+      'Content-Type': 'text/javascript'
+    });
+    fs.readFile(__dirname + path, 'utf8', function(err, data) {
+      if (err) throw err;
+      res.write(data, 'utf8');
+      res.end();
+    });
   } else {
     if (path === '/' || path === '/home') {
       require('./controllers/home').get(req, res);
+    } else if (path === '/game') {
+      require('./controllers/game').get(req, res);
     } else {
       require('./controllers/404').get(req, res);
     }
