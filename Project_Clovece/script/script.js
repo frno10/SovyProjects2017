@@ -1,3 +1,4 @@
+//var rolls
 function generateGameboard()
 {
     var gameboardClass = [
@@ -52,6 +53,7 @@ function generateGameboard()
        createBoardElement("content", elementID, elementClass, elementDATA);
      }
     }
+    
 }
 
       function createBoardElement(where, id, classname, data) {
@@ -92,7 +94,8 @@ function generateGameboard()
         myLogin.classname='csslogin';
         myLogin.style.width='200px';
         myLogin.style.height='160px'; 
-        myLogin.style.borderRadius='30px'; myLogin.style.background="lightgrey"
+        myLogin.style.borderRadius='30px'; 
+        myLogin.style.background="lightgrey"
         document.getElementById('content').style.margin='0 auto';     
         document.getElementById('content').appendChild(myLogin);
 
@@ -101,18 +104,36 @@ function generateGameboard()
         label.innerHTML="Your name: ";
         document.getElementById('login').appendChild(label);
 
-        var input=document.createElement("INPUT");
+        var input=document.createElement('input');
         input.type='text';
+         input.id="inputField";
         document.getElementById('login').appendChild(input);
-
-         var eol=document.createElement('br');
-         document.getElementById('login').appendChild(eol);
-         var eol2=document.createElement('br');
-         document.getElementById('login').appendChild(eol2);
-
+         
+         
+        var eol=document.createElement('br');
+        document.getElementById('login').appendChild(eol);
+        var eol2=document.createElement('br');
+        document.getElementById('login').appendChild(eol2);
         var button=document.createElement('button');
         button.className="btn btn-md btn-dark";
         button.style.width="80px";
         button.innerHTML='OK';
         document.getElementById('login').appendChild(button);
+        button.addEventListener("click", clearLogin);
      }
+
+    function clearLogin()
+    {
+        var input = document.getElementById("inputField");
+        if(input.value=="")
+         {
+         alert("Invalid name!");     
+         }
+         
+         else
+         {
+            document.getElementById('login').remove();
+            generateGameboard();
+         }
+    
+    }
