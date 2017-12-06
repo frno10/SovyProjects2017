@@ -1,3 +1,11 @@
+body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url(../img/back.jpg);
+    position: fixed;
+}
 .block
 {
   width: 40px;
@@ -8,6 +16,7 @@
 .red
 {
   background: red;
+  
 }
 .blue
 {
@@ -25,13 +34,37 @@
 {
   background: lightgray;
 }
-.none
+.non
 {
   background: transparent;
 }
-
 #content
 {
   width: 600px;
   height: 600px;
+  margin: 0 auto;
+  background-color: 
+  padding-left: 25px;
+  padding-top: 25px;
 }
+#login{
+ margin: 200px auto;
+}
+
+label{
+    font-family: sans-serif;
+    font-size: 27px;
+    padding-left: 30px;
+    padding-top: 5px;
+    
+}
+
+button{
+    margin-left: 30%;
+
+}
+
+input{
+    margin-left: 10px;
+}
+

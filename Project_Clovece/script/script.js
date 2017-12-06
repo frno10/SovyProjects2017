@@ -91,8 +91,8 @@ function generateGameboard()
         myLogin.id='login';
         myLogin.classname='csslogin';
         myLogin.style.width='200px';
-        myLogin.style.height='200px';
-        myLogin.style.background='lightblue';  
+        myLogin.style.height='160px'; 
+        myLogin.style.borderRadius='30px'; myLogin.style.background="lightgrey"
         document.getElementById('content').style.margin='0 auto';     
         document.getElementById('content').appendChild(myLogin);
 
@@ -105,12 +105,14 @@ function generateGameboard()
         input.type='text';
         document.getElementById('login').appendChild(input);
 
-        var eol=document.createElement('br');
-        document.getElementById('login').appendChild(eol);
+         var eol=document.createElement('br');
+         document.getElementById('login').appendChild(eol);
+         var eol2=document.createElement('br');
+         document.getElementById('login').appendChild(eol2);
 
         var button=document.createElement('button');
-        button.style.width = "50px";
-        button.style.height = "25px";
+        button.className="btn btn-md btn-dark";
+        button.style.width="80px";
         button.innerHTML='OK';
         document.getElementById('login').appendChild(button);
      }
