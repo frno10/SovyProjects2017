@@ -171,3 +171,8 @@ function generateGameboard()
         document.getElementById("yellowStart"+i).appendChild(startYellow);
         }
     }
+
+    function rollDice()
+    {
+    
+    }
