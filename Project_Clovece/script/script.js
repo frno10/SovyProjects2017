@@ -1,6 +1,8 @@
 //var rolls
 function generateGameboard()
 {
+    var board='url(img/board.png)';
+    document.getElementById('content').style.backgroundImage=board;
     var gameboardClass = [
                            ["redpawn", "redpawn", "none", "none", "other", "other", "blue", "none", "none", "bluepawn", "bluepawn"],
                            ["redpawn", "redpawn", "none", "none", "other", "blue", "other", "none", "none", "bluepawn", "bluepawn"],
@@ -132,8 +134,40 @@ function generateGameboard()
          
          else
          {
-            document.getElementById('login').remove();
-            generateGameboard();
+         document.getElementById('login').remove();
+         generateGameboard();
+         startGame();
          }
-    
+    }
+
+    function startGame()
+    {
+    var i;
+    for(i=1;i<=4;i++)
+        {
+        var startRed=document.createElement("img");
+        startRed.setAttribute("src", "img/red.png");
+        document.getElementById("redStart"+i).appendChild(startRed);
+        }
+        
+    for(i=1;i<=4;i++)
+        {
+        var startGreen=document.createElement("img");
+        startGreen.setAttribute("src", "img/green.png");
+        document.getElementById("greenStart"+i).appendChild(startGreen);
+        }
+        
+    for(i=1;i<=4;i++)
+        {
+        var startBlue=document.createElement("img");
+        startBlue.setAttribute("src", "img/blue.png");
+        document.getElementById("blueStart"+i).appendChild(startBlue);
+        }
+        
+    for(i=1;i<=4;i++)
+        {
+        var startYellow=document.createElement("img");
+        startYellow.setAttribute("src", "img/yellow.png");
+        document.getElementById("yellowStart"+i).appendChild(startYellow);
+        }
     }

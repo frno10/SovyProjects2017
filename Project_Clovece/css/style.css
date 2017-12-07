@@ -13,6 +13,7 @@ body{
   margin: 5px;
   float: left;
 }
+
 .redpawn
 {
 background: #c61a1a;  
@@ -30,34 +31,11 @@ background: #2e6921;
 background: #fec11a;
 }
 
-.red
+.wrapper
 {
-background: transparent;  
-}
-.blue
-{
-background: transparent;
-}
-.green
-{
-background: transparent;
-}
-.yellow
-{
-background: transparent;
-}
-.other
-{
-background: transparent;
-}
-.non
-{
-background: transparent;
+padding-top: 35px;
 }
 
-.wrapper{
-    padding-top: 35px;
-}
 
 #content
 {
@@ -66,7 +44,6 @@ height: 600px;
 margin: auto;
 padding-bottom: 50px;
 padding-top: 25px;
-background-image: url(../img/board.png);
 padding-left: 25px;
 }
 
