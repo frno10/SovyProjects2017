@@ -22,7 +22,7 @@ function generateGameboard()
                         ["", "", "", "", "7  ", "blueHome2", "13 ", "", "", "", ""],
                         ["", "", "", "", "6  ", "blueHome3", "14 ", "", "", "", ""],
                         ["1  ", "2  ", "3  ", "4  ", "5  ", "blueHome4", "15 ", "16 ", "17 ", "18 ", "19 "],
-                        ["40 ", "redHome1", "redHome2", "redHome3", "redHome4", "", "greenHome4", "greenHome3", "greenHome2", "greenHome1", "20 "],
+                        ["40 ", "redHome1", "redHome2", "redHome3", "redHome4", "dice", "greenHome4", "greenHome3", "greenHome2", "greenHome1", "20 "],
                         ["39 ", "38 ", "37 ", "36 ", "35 ", "yellowHome4", "25 ", "24 ", "23 ", "22 ", "21 "],
                         ["", "", "", "", "34 ", "yellowHome3", "26 ", "", "", "", ""],
                         ["", "", "", "", "33 ", "yellowHome2", "27 ", "", "", "", ""],
@@ -137,6 +137,7 @@ function generateGameboard()
          document.getElementById('login').remove();
          generateGameboard();
          startGame();
+         generateDice();
          }
     }
 
@@ -172,7 +173,46 @@ function generateGameboard()
         }
     }
 
+    function generateDice()
+    {
+    var dice=document.createElement("img");
+    dice.setAttribute("src", "img/roll.png");
+    dice.addEventListener("click", rollDice);
+    document.getElementById("dice").appendChild(dice);
+    }
+
     function rollDice()
     {
+    var dice=document.createElement("img");
+    var rollPic=Math.floor(Math.random()*6+1);
+    console.log(rollPic);
+    if(parseInt(rollPic)==1)
+    	{
+    	dice.setAttribute("src", "img/img1.png");
+    	}
+
+    else if(parseInt(rollPic)==2)
+    	{
+    	dice.setAttribute("src", "img/img2.png");
+    	}
+
+    else if(parseInt(rollPic)==3)
+    	{
+    	dice.setAttribute("src", "img/img3.png");
+    	}
     
+    else if(parseInt(rollPic)==4)
+    	{
+    	dice.setAttribute("src", "img/img4.png");
+    	}
+
+    else if(parseInt(rollPic)==5)
+    	{
+    	dice.setAttribute("src", "img/img5.png");
+    	}
+
+    else
+    	{
+    	dice.setAttribute("src", "img/img6.png");
+    	}
     }
