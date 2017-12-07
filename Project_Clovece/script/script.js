@@ -2,8 +2,8 @@
 function generateGameboard()
 {
     var gameboardClass = [
-                           ["red", "red", "none", "none", "other", "other", "blue", "none", "none", "blue", "blue"],
-                           ["red", "red", "none", "none", "other", "blue", "other", "none", "none", "blue", "blue"],
+                           ["redpawn", "redpawn", "none", "none", "other", "other", "blue", "none", "none", "bluepawn", "bluepawn"],
+                           ["redpawn", "redpawn", "none", "none", "other", "blue", "other", "none", "none", "bluepawn", "bluepawn"],
                            ["none", "none", "none", "none", "other", "blue", "other", "none", "none", "none", "none"],
                            ["none", "none", "none", "none", "other", "blue", "other", "none", "none", "none", "none"],
                            ["red", "other", "other", "other", "other", "blue", "other", "other", "other", "other", "other"],
@@ -11,8 +11,8 @@ function generateGameboard()
                            ["other", "other", "other", "other", "other", "yellow", "other", "other", "other", "other", "green"],
                            ["none", "none", "none", "none", "other", "yellow", "other", "none", "none", "none", "none"],
                            ["none", "none", "none", "none", "other", "yellow", "other", "none", "none", "none", "none"],
-                           ["yellow", "yellow", "none", "none", "other", "yellow", "other", "none", "none", "green", "green"],
-                           ["yellow", "yellow", "none", "none", "yellow", "other", "other", "none", "none", "green", "green"]
+                           ["yellowpawn", "yellowpawn", "none", "none", "other", "yellow", "other", "none", "none", "greenpawn", "greenpawn"],
+                           ["yellowpawn", "yellowpawn", "none", "none", "yellow", "other", "other", "none", "none", "greenpawn", "greenpawn"]
                          ];
     var gameboardID = [
                         ["redStart1", "redStart2", "", "", "9  ", "10 ", "11 ", "", "", "blueStart1", "blueStart2"],

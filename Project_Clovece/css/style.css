@@ -10,42 +10,64 @@ body{
 {
   width: 40px;
   height: 40px;
-  margin: 6px;
+  margin: 5px;
   float: left;
 }
+.redpawn
+{
+background: #c61a1a;  
+}
+.bluepawn
+{
+background: #2f4f98;
+}
+.greenpawn
+{
+background: #2e6921;
+}
+.yellowpawn
+{
+background: #fec11a;
+}
+
 .red
 {
-background: red;  
+background: transparent;  
 }
 .blue
 {
-background: blue;
+background: transparent;
 }
 .green
 {
-background: green;
+background: transparent;
 }
 .yellow
 {
-background: yellow;
+background: transparent;
 }
 .other
 {
-background: lightgray;
+background: transparent;
 }
 .non
 {
 background: transparent;
 }
 
+.wrapper{
+    padding-top: 35px;
+}
+
 #content
 {
 width: 600px;
 height: 600px;
-margin: 0 auto;
-background-color: 
-padding-left: 25px;
+margin: auto;
+padding-bottom: 50px;
 padding-top: 25px;
+background-image: url(../img/board.png);
+padding-left: 25px;
 }
 
 #login
