@@ -1,4 +1,4 @@
-//var rolls
+var globalPic;
 function generateGameboard()
 {
     var board='url(img/board.png)';
@@ -148,6 +148,8 @@ function generateGameboard()
         {
         var startRed=document.createElement("img");
         startRed.setAttribute("src", "img/red.png");
+        startRed.id=('redpawn'+i);
+        startRed.addEventListener("click", );
         document.getElementById("redStart"+i).appendChild(startRed);
         }
         
@@ -155,6 +157,7 @@ function generateGameboard()
         {
         var startGreen=document.createElement("img");
         startGreen.setAttribute("src", "img/green.png");
+        startGreen.id=('greenpawn'+i);
         document.getElementById("greenStart"+i).appendChild(startGreen);
         }
         
@@ -162,6 +165,7 @@ function generateGameboard()
         {
         var startBlue=document.createElement("img");
         startBlue.setAttribute("src", "img/blue.png");
+        startBlue.id=('bluepawn'+i);
         document.getElementById("blueStart"+i).appendChild(startBlue);
         }
         
@@ -169,12 +173,14 @@ function generateGameboard()
         {
         var startYellow=document.createElement("img");
         startYellow.setAttribute("src", "img/yellow.png");
+        startYellow.id=('yellowpawn'+i);
         document.getElementById("yellowStart"+i).appendChild(startYellow);
         }
     }
 
     function generateDice()
     {
+    document.getElementById("dice").innerHTML="";
     var dice=document.createElement("img");
     dice.setAttribute("src", "img/roll.png");
     dice.addEventListener("click", rollDice);
@@ -185,34 +191,61 @@ function generateGameboard()
     {
     var dice=document.createElement("img");
     var rollPic=Math.floor(Math.random()*6+1);
+    globalPic=rollPic;
     console.log(rollPic);
     if(parseInt(rollPic)==1)
     	{
+    	document.getElementById("dice").innerHTML="";
     	dice.setAttribute("src", "img/img1.png");
+    	document.getElementById("dice").appendChild(dice);
     	}
 
     else if(parseInt(rollPic)==2)
     	{
+    	document.getElementById("dice").innerHTML="";
+    	dice.removeAttribute("src","img/roll.png");
     	dice.setAttribute("src", "img/img2.png");
+    	document.getElementById("dice").appendChild(dice);
     	}
 
     else if(parseInt(rollPic)==3)
     	{
+    	document.getElementById("dice").innerHTML="";
+    	dice.removeAttribute("src","img/roll.png");
     	dice.setAttribute("src", "img/img3.png");
+    	document.getElementById("dice").appendChild(dice);
     	}
     
     else if(parseInt(rollPic)==4)
     	{
+    	document.getElementById("dice").innerHTML="";
+    	dice.removeAttribute("src","img/roll.png");
     	dice.setAttribute("src", "img/img4.png");
+    	document.getElementById("dice").appendChild(dice);
     	}
 
     else if(parseInt(rollPic)==5)
     	{
+    	document.getElementById("dice").innerHTML="";
+    	dice.removeAttribute("src","img/roll.png");
     	dice.setAttribute("src", "img/img5.png");
+    	document.getElementById("dice").appendChild(dice);
     	}
 
     else
     	{
+    	document.getElementById("dice").innerHTML="";
+    	dice.removeAttribute("src","img/roll.png");
     	dice.setAttribute("src", "img/img6.png");
+    	document.getElementById("dice").appendChild(dice);
+    	}
+    	setTimeout(generateDice, 1000);
+    }
+
+    function fromHome()
+    {
+    if(parseInt(globalPic)==6)
+    	{
+
     	}
     }
