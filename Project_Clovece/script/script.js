@@ -245,33 +245,113 @@ function generateGameboard()
     	}
         dice.addEventListener("click",rollDice);
     }
-
+    
     function action()
     {
-            if(((parseInt(globalNum)==6)&&(parseInt(turn)==1))&&((this.parentNode)==document.getElementById('yellowStart1')||(this.parentNode)==document.getElementById('yellowStart2')||(this.parentNode)==document.getElementById('yellowStart3')||(this.parentNode)==document.getElementById('yellowStart4')))
+        var count=0;
+        if(this.id.includes('yellow'))
+        for(var i=1;i<=4;i++)
+        {
+            if(document.getElementById('yellowpawn'+i).parentNode==document.getElementById('yellowStart'+i))
             {
-            document.getElementById("31 ").appendChild(this);
-            nextPlayer();
+            count++;
             }
+            
+            else
+            {
+            moveOnBoard();
+            }
+        }
+        if(count==4)
+        {
+        moveFromHome(this);
+        }
         
-            else if(((parseInt(globalNum)==6)&&(parseInt(turn)==2))&&((this.parentNode)==document.getElementById('redStart1')||(this.parentNode)==document.getElementById('redStart2')||(this.parentNode)==document.getElementById('redStart3')||(this.parentNode)==document.getElementById('redStart4')))
+        if(this.id.includes('red'))
+        for(var i=1;i<=4;i++)
+        {
+            if(document.getElementById('redpawn'+i).parentNode==document.getElementById('redStart'+i))
             {
-            document.getElementById("1  ").appendChild(this);
-            nextPlayer();
+            count++;
             }
+            else
+            {
+            moveOnBoard();
+            }
+        }
+        if(count==4)
+        {
+        moveFromHome(this);
+        }
+        
+        if(this.id.includes('blue'))
+        for(var i=1;i<=4;i++)
+        {
+            if(document.getElementById('bluepawn'+i).parentNode==document.getElementById('blueStart'+i))
+            {
+            count++;
+            }
+            else
+            {
+            moveOnBoard();
+            }
+        }
+        if(count==4)
+        {
+        moveFromHome(this);
+        }
+        
+        if(this.id.includes('green'))
+        for(var i=1;i<=4;i++)
+        {
+            if(document.getElementById('greenpawn'+i).parentNode==document.getElementById('greenStart'+i))
+            {
+            count++;
+            }
+            else
+            {
+            moveOnBoard();
+            }
+        }
+        if(count==4)
+        {
+        moveFromHome(this);
+        }
+    }
+
+
+    function moveFromHome(fig)
+    {
+        if((parseInt(globalNum)==6)&&(parseInt(turn)==1))
+        {
+        document.getElementById("31 ").appendChild(fig);
+        globalNum=0;
+        nextPlayer();
+        console.log(this);
+        }
+        
+        else if((parseInt(globalNum)==6)&&(parseInt(turn)==2))
+        {
+        document.getElementById("1  ").appendChild(fig);
+        globalNum=0;
+        nextPlayer();
+        }
         
             
-            else if(((parseInt(globalNum)==6)&&(parseInt(turn)==3))&&((this.parentNode)==document.getElementById('blueStart1')||(this.parentNode)==document.getElementById('blueStart2')||(this.parentNode)==document.getElementById('blueStart3')||(this.parentNode)==document.getElementById('blueStart4')))
-            {
-            document.getElementById("11 ").appendChild(this);
-            nextPlayer();
-            }
+        else if((parseInt(globalNum)==6)&&(parseInt(turn)==3))
+        {
+        document.getElementById("11 ").appendChild(fig);
+        globalNum=0;
+        nextPlayer();
+        }
         
-            else if(((parseInt(globalNum)==6)&&(parseInt(turn)==4))&&((this.parentNode)==document.getElementById('greenStart1')||(this.parentNode)==document.getElementById('greenStart2')||(this.parentNode)==document.getElementById('greenStart3')||(this.parentNode)==document.getElementById('greenStart4')))
+        else if((parseInt(globalNum)==6)&&(parseInt(turn)==4))
             {
-            document.getElementById("21 ").appendChild(this);
-            nextPlayer();
-            }
+        document.getElementById("21 ").appendChild(fig);
+        globalNum=0;
+        nextPlayer();  
+        }
+        //console.log(ctukc);
     } 
 
     function nextPlayer()
@@ -283,7 +363,4 @@ function generateGameboard()
         turn++;
     }
 
-    function fromHome()
-    {
-    
-    }
+  
