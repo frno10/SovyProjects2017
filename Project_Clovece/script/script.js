@@ -108,7 +108,7 @@ function generateGameboard()
 
         var input=document.createElement('input');
         input.type='text';
-         input.id="inputField";
+        input.id="inputField";
         document.getElementById('login').appendChild(input);
          
          
@@ -149,7 +149,6 @@ function generateGameboard()
         var startRed=document.createElement("img");
         startRed.setAttribute("src", "img/red.png");
         startRed.id=('redpawn'+i);
-        startRed.addEventListener("click", );
         document.getElementById("redStart"+i).appendChild(startRed);
         }
         
@@ -239,9 +238,9 @@ function generateGameboard()
     	dice.setAttribute("src", "img/img6.png");
     	document.getElementById("dice").appendChild(dice);
     	}
-    	setTimeout(generateDice, 1000);
+        dice.addEventListener("click", rollDice);
     }
-
+    /*
     function fromHome()
     {
     if(parseInt(globalPic)==6)
@@ -249,3 +248,4 @@ function generateGameboard()
 
     	}
     }
+    */
