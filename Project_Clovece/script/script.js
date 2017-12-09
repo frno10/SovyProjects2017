@@ -155,7 +155,7 @@ function generateGameboard()
         startRed.setAttribute("src", "img/red.png");
         startRed.id=('redpawn'+i);
         startRed.addEventListener("click",checkMove);
-        startRed.setAttribute("data-MoveCounter","0");
+        startRed.setAttribute("data-moveCounter","1");
         document.getElementById("redStart"+i).appendChild(startRed);
         }
 
@@ -165,7 +165,7 @@ function generateGameboard()
         startGreen.setAttribute("src", "img/green.png");
         startGreen.id=('greenpawn'+i);
         startGreen.addEventListener("click",checkMove);
-        startGreen.setAttribute("data-MoveCounter","0");
+        startGreen.setAttribute("data-moveCounter","1");
         document.getElementById("greenStart"+i).appendChild(startGreen);
         }
 
@@ -175,7 +175,7 @@ function generateGameboard()
         startBlue.setAttribute("src", "img/blue.png");
         startBlue.id=('bluepawn'+i);
         startBlue.addEventListener("click",checkMove);
-        startBlue.setAttribute("data-MoveCounter","0");
+        startBlue.setAttribute("data-moveCounter","1");
         document.getElementById("blueStart"+i).appendChild(startBlue);
         }
 
@@ -185,7 +185,7 @@ function generateGameboard()
         startYellow.setAttribute("src", "img/yellow.png");
         startYellow.id=('yellowpawn'+i);
         startYellow.addEventListener("click",checkMove);
-        startYellow.setAttribute("data-MoveCounter","0");
+        startYellow.setAttribute("data-moveCounter","1");
         document.getElementById("yellowStart"+i).appendChild(startYellow);
         }
     }
@@ -330,9 +330,6 @@ function generateGameboard()
         moveFromHome(this,this.id);
         }
     }
-
-
-
 }
 
 function moveOnBoard(pawn, pawnID, rollValue) {
@@ -348,8 +345,12 @@ function moveOnBoard(pawn, pawnID, rollValue) {
     finalPosition = finalPosition + " ";
   }
   var pawnonboard = document.getElementById(pawnID);
+  var moveCounter = parseInt(pawn.dataset.movecounter);
   document.getElementById(pawnID).innerHTML = "";
   document.getElementById(finalPosition).appendChild(pawnonboard);
+  pawn.dataset.movecounter = moveCounter + rollValue;
+//   console.log('movecounter:' + moveCounter);
+  console.log(pawn);
 }
 
     function moveFromHome(fig,figure)
