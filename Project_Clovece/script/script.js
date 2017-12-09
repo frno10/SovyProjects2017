@@ -1,5 +1,8 @@
 var globalNum;
 var turn=1;
+
+var playerOnTurn = "yellow";
+
 function generateGameboard()
 {
     var board='url(img/board.png)';
@@ -56,7 +59,7 @@ function generateGameboard()
        createBoardElement("content", elementID, elementClass, elementDATA);
      }
     }
-    
+
 }
 
       function createBoardElement(where, id, classname, data) {
@@ -96,10 +99,10 @@ function generateGameboard()
         myLogin.id='login';
         myLogin.classname='csslogin';
         myLogin.style.width='200px';
-        myLogin.style.height='160px'; 
-        myLogin.style.borderRadius='30px'; 
+        myLogin.style.height='160px';
+        myLogin.style.borderRadius='30px';
         myLogin.style.background="lightgrey"
-        document.getElementById('content').style.margin='0 auto';     
+        document.getElementById('content').style.margin='0 auto';
         document.getElementById('content').appendChild(myLogin);
 
         var label=document.createElement('label');
@@ -111,8 +114,8 @@ function generateGameboard()
         input.type='text';
         input.id="inputField";
         document.getElementById('login').appendChild(input);
-         
-         
+
+
         var eol=document.createElement('br');
         document.getElementById('login').appendChild(eol);
         var eol2=document.createElement('br');
@@ -130,9 +133,9 @@ function generateGameboard()
         var input = document.getElementById("inputField");
         if(input.value=="")
          {
-         alert("Please, enter the name!");     
+         alert("Please, enter the name!");
          }
-         
+
          else
          {
          document.getElementById('login').remove();
@@ -153,7 +156,7 @@ function generateGameboard()
         startRed.addEventListener("click",checkMove);
         document.getElementById("redStart"+i).appendChild(startRed);
         }
-        
+
     for(i=1;i<=4;i++)
         {
         var startGreen=document.createElement("img");
@@ -162,7 +165,7 @@ function generateGameboard()
         startGreen.addEventListener("click",checkMove);
         document.getElementById("greenStart"+i).appendChild(startGreen);
         }
-        
+
     for(i=1;i<=4;i++)
         {
         var startBlue=document.createElement("img");
@@ -171,7 +174,7 @@ function generateGameboard()
         startBlue.addEventListener("click",checkMove);
         document.getElementById("blueStart"+i).appendChild(startBlue);
         }
-        
+
     for(i=1;i<=4;i++)
         {
         var startYellow=document.createElement("img");
@@ -219,7 +222,7 @@ function generateGameboard()
     	dice.setAttribute("src", "img/img3.png");
     	document.getElementById("dice").appendChild(dice);
     	}
-    
+
     else if(parseInt(rollNum)==4)
     	{
     	document.getElementById("dice").innerHTML="";
@@ -245,11 +248,11 @@ function generateGameboard()
     	}
         dice.addEventListener("click",rollDice);
     }
-    
+
     function checkMove()
     {
         var count=0;
-        if(this.id.includes('yellow'))
+        if(this.id.includes('yellow')  && playerOnTurn == "yellow")
         {
         for(var i=1;i<=4;i++)
         {
@@ -257,10 +260,10 @@ function generateGameboard()
             {
             count++;
             }
-            
+
             else
             {
-            moveOnBoard();
+            moveOnBoard(this, this.id, globalNum);
             }
         }
         if(count==4)
@@ -268,7 +271,7 @@ function generateGameboard()
         moveFromHome(this,this.id);
         }
     }
-        if(this.id.includes('red'))
+        if(this.id.includes('red')  && playerOnTurn == "red")
         {
         for(var i=1;i<=4;i++)
         {
@@ -278,7 +281,7 @@ function generateGameboard()
             }
             else
             {
-            moveOnBoard();
+            moveOnBoard(this, this.id, globalNum);
             }
         }
         if(count==4)
@@ -286,7 +289,7 @@ function generateGameboard()
         moveFromHome(this,this.id);
         }
     }
-        if(this.id.includes('blue'))
+        if(this.id.includes('blue')  && playerOnTurn == "blue")
         {
         for(var i=1;i<=4;i++)
         {
@@ -296,15 +299,15 @@ function generateGameboard()
             }
             else
             {
-            moveOnBoard();
+            moveOnBoard(this, this.id, globalNum);
             }
         }
         if(count==4)
         {
         moveFromHome(this,this.id);
         }
-    } 
-        if(this.id.includes('green'))
+    }
+        if(this.id.includes('green') && playerOnTurn == "green")
         {
         for(var i=1;i<=4;i++)
         {
@@ -314,7 +317,7 @@ function generateGameboard()
             }
             else
             {
-            moveOnBoard();
+            moveOnBoard(this, this.id, globalNum);
             }
         }
         if(count==4)
@@ -322,6 +325,30 @@ function generateGameboard()
         moveFromHome(this,this.id);
         }
     }
+
+
+
+}
+
+function moveOnBoard(pawn, pawnID, rollValue) {
+  console.log(pawn);
+  console.log(pawnID);
+  console.log(rollValue);
+
+  var finalPosition = parseInt(pawn.parentNode.id) + parseInt(rollValue);
+  if (finalPosition > 40) {
+    finalPosition = finalPosition - 40;
+  }
+  if (finalPosition < 10) {
+    finalPosition = finalPosition + "  ";
+  }
+  else {
+    finalPosition = finalPosition + " ";
+  }
+  var pawnonboard = document.getElementById(pawnID);
+  document.getElementById(pawnID).innerHTML = "";
+  document.getElementById(finalPosition).appendChild(pawnonboard);
+  console.log(finalPosition);
 }
 
     function moveFromHome(fig,figure)
@@ -332,29 +359,29 @@ function generateGameboard()
         globalNum=0;
         onTurn();
         }
-        
+
         if((parseInt(globalNum)==6)&&(parseInt(turn)==2)&&(figure.includes("red")))
         {
         document.getElementById("1  ").appendChild(fig);
         globalNum=0;
         onTurn();
         }
-        
-            
+
+
         if((parseInt(globalNum)==6)&&(parseInt(turn)==3)&&(figure.includes("blue")))
         {
         document.getElementById("11 ").appendChild(fig);
         globalNum=0;
         onTurn();
         }
-        
+
         if((parseInt(globalNum)==6)&&(parseInt(turn)==4)&&(figure.includes("green")))
         {
         document.getElementById("21 ").appendChild(fig);
         globalNum=0;
-        onTurn();  
+        onTurn();
         }
-    } 
+    }
 
     function onTurn()
     {
@@ -363,6 +390,17 @@ function generateGameboard()
         turn=0;
         }
         turn++;
+        if (turn == 1) {
+          playerOnTurn == "yellow";
+        }
+        else if (turn == 2) {
+          playerOnTurn == "red";
+        }
+        else if (turn == 3) {
+          playerOnTurn == "blue";
+        }
+        else {
+          playerOnTurn == "green";
+        }
+        console.log(playerOnTurn);
     }
-
-  
