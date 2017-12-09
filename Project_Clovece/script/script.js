@@ -330,14 +330,14 @@ function generateGameboard()
         {
         document.getElementById("31 ").appendChild(fig);
         globalNum=0;
-        nextPlayer();
+        onTurn();
         }
         
         if((parseInt(globalNum)==6)&&(parseInt(turn)==2)&&(figure.includes("red")))
         {
         document.getElementById("1  ").appendChild(fig);
         globalNum=0;
-        nextPlayer();
+        onTurn();
         }
         
             
@@ -345,18 +345,18 @@ function generateGameboard()
         {
         document.getElementById("11 ").appendChild(fig);
         globalNum=0;
-        nextPlayer();
+        onTurn();
         }
         
         if((parseInt(globalNum)==6)&&(parseInt(turn)==4)&&(figure.includes("green")))
         {
         document.getElementById("21 ").appendChild(fig);
         globalNum=0;
-        nextPlayer();  
+        onTurn();  
         }
     } 
 
-    function nextPlayer()
+    function onTurn()
     {
         if(turn==4)
         {
