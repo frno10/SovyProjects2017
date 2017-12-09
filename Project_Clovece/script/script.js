@@ -137,12 +137,12 @@ function generateGameboard()
          {
          document.getElementById('login').remove();
          generateGameboard();
-         startGame();
+         generateFigures();
          generateDice();
          }
     }
 
-    function startGame()
+    function generateFigures()
     {
     var i;
     for(i=1;i<=4;i++)
@@ -250,6 +250,7 @@ function generateGameboard()
     {
         var count=0;
         if(this.id.includes('yellow'))
+        {
         for(var i=1;i<=4;i++)
         {
             if(document.getElementById('yellowpawn'+i).parentNode==document.getElementById('yellowStart'+i))
@@ -266,8 +267,9 @@ function generateGameboard()
         {
         moveFromHome(this,this.id);
         }
-        
+    }
         if(this.id.includes('red'))
+        {
         for(var i=1;i<=4;i++)
         {
             if(document.getElementById('redpawn'+i).parentNode==document.getElementById('redStart'+i))
@@ -283,8 +285,9 @@ function generateGameboard()
         {
         moveFromHome(this,this.id);
         }
-        
+    }
         if(this.id.includes('blue'))
+        {
         for(var i=1;i<=4;i++)
         {
             if(document.getElementById('bluepawn'+i).parentNode==document.getElementById('blueStart'+i))
@@ -300,8 +303,9 @@ function generateGameboard()
         {
         moveFromHome(this,this.id);
         }
-        
+    } 
         if(this.id.includes('green'))
+        {
         for(var i=1;i<=4;i++)
         {
             if(document.getElementById('greenpawn'+i).parentNode==document.getElementById('greenStart'+i))
@@ -318,7 +322,7 @@ function generateGameboard()
         moveFromHome(this,this.id);
         }
     }
-
+}
 
     function moveFromHome(fig,figure)
     {
