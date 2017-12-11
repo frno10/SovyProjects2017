@@ -2,7 +2,7 @@ var globalNum;
 var turn=1;
 
 var playerOnTurn = "yellow";
-generateMoveSet();
+// generateMoveSet();
 
 function generateGameboard()
 {
@@ -257,7 +257,7 @@ function generateGameboard()
     function checkMove()
     {
         var count=0;
-        if(this.id.includes('yellow')  && playerOnTurn == "yellow")
+        if(this.id.includes('yellow')  && turn == 1)
         {
         for(var i=1;i<=4;i++)
         {
@@ -276,7 +276,7 @@ function generateGameboard()
         moveFromHome(this,this.id);
         }
     }
-        if(this.id.includes('red')  && playerOnTurn == "red")
+        if(this.id.includes('red')  && turn == 2)
         {
         for(var i=1;i<=4;i++)
         {
@@ -294,7 +294,7 @@ function generateGameboard()
         moveFromHome(this,this.id);
         }
     }
-        if(this.id.includes('blue')  && playerOnTurn == "blue")
+        if(this.id.includes('blue')  && turn == 3)
         {
         for(var i=1;i<=4;i++)
         {
@@ -312,7 +312,7 @@ function generateGameboard()
         moveFromHome(this,this.id);
         }
     }
-        if(this.id.includes('green') && playerOnTurn == "green")
+        if(this.id.includes('green') && turn == 4)
         {
         for(var i=1;i<=4;i++)
         {
@@ -333,6 +333,9 @@ function generateGameboard()
 }
 
 function moveOnBoard(pawn, pawnID, rollValue) {
+    if(globalNum == 0){
+        return 1;
+    }
 
   var finalPosition = parseInt(pawn.parentNode.id) + parseInt(rollValue);
   if (finalPosition > 40) {
@@ -344,13 +347,17 @@ function moveOnBoard(pawn, pawnID, rollValue) {
   else {
     finalPosition = finalPosition + " ";
   }
+
   var pawnonboard = document.getElementById(pawnID);
   var moveCounter = parseInt(pawn.dataset.movecounter);
+
   document.getElementById(pawnID).innerHTML = "";
   document.getElementById(finalPosition).appendChild(pawnonboard);
+  // adding to movecounter
   pawn.dataset.movecounter = moveCounter + rollValue;
-//   console.log('movecounter:' + moveCounter);
   console.log(pawn);
+  globalNum=0;
+  onTurn();  
 }
 
     function moveFromHome(fig,figure)
@@ -359,29 +366,28 @@ function moveOnBoard(pawn, pawnID, rollValue) {
         {
         document.getElementById("31 ").appendChild(fig);
         globalNum=0;
-        onTurn();
+        // onTurn();
         }
 
         if((parseInt(globalNum)==6)&&(parseInt(turn)==2)&&(figure.includes("red")))
         {
         document.getElementById("1  ").appendChild(fig);
         globalNum=0;
-        onTurn();
+        // onTurn();
         }
-
 
         if((parseInt(globalNum)==6)&&(parseInt(turn)==3)&&(figure.includes("blue")))
         {
         document.getElementById("11 ").appendChild(fig);
         globalNum=0;
-        onTurn();
+        // onTurn();
         }
 
         if((parseInt(globalNum)==6)&&(parseInt(turn)==4)&&(figure.includes("green")))
         {
         document.getElementById("21 ").appendChild(fig);
         globalNum=0;
-        onTurn();
+        // onTurn();
         }
     }
 
@@ -404,7 +410,7 @@ function moveOnBoard(pawn, pawnID, rollValue) {
         else {
           playerOnTurn == "green";
         }
-        console.log(playerOnTurn);
+        console.log('turn:', turn);
     }
 
 
