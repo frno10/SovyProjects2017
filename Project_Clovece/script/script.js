@@ -369,6 +369,7 @@ if(pawn.dataset.movecounter > 40 && pawn.dataset.movecounter < 45){
 }
 
 else if(pawn.dataset.movecounter > 44){
+    pawn.dataset.movecounter -= rollValue;
     globalNum = 0;
     onTurn();
     console.log(pawn,homeField);
