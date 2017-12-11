@@ -8,7 +8,6 @@ function generateGameboard()
 {
     var board='url(img/board.png)';
     document.getElementById('content').style.backgroundImage=board;
-    document.getElementById('content').style.boxShadow='13px 13px 27px 7px rgba(0,0,0,0.75)';
     var gameboardClass = [
                            ["redpawn", "redpawn", "none", "none", "other", "other", "blue", "none", "none", "bluepawn", "bluepawn"],
                            ["redpawn", "redpawn", "none", "none", "other", "blue", "other", "none", "none", "bluepawn", "bluepawn"],
@@ -25,13 +24,13 @@ function generateGameboard()
     var gameboardID = [
                         ["redStart1", "redStart2", "", "", "9  ", "10 ", "11 ", "", "", "blueStart1", "blueStart2"],
                         ["redStart3", "redStart4", "", "", "8  ", "blueHome1", "12 ", "", "", "blueStart3", "blueStart4"],
-                        ["name2", "", "", "", "7  ", "blueHome2", "13 ", "", "", "name3", ""],
+                        ["", "", "", "", "7  ", "blueHome2", "13 ", "", "", "", ""],
                         ["", "", "", "", "6  ", "blueHome3", "14 ", "", "", "", ""],
                         ["1  ", "2  ", "3  ", "4  ", "5  ", "blueHome4", "15 ", "16 ", "17 ", "18 ", "19 "],
                         ["40 ", "redHome1", "redHome2", "redHome3", "redHome4", "dice", "greenHome4", "greenHome3", "greenHome2", "greenHome1", "20 "],
                         ["39 ", "38 ", "37 ", "36 ", "35 ", "yellowHome4", "25 ", "24 ", "23 ", "22 ", "21 "],
                         ["", "", "", "", "34 ", "yellowHome3", "26 ", "", "", "", ""],
-                        ["name1", "", "", "", "33 ", "yellowHome2", "27 ", "", "", "name4", ""],
+                        ["", "", "", "", "33 ", "yellowHome2", "27 ", "", "", "", ""],
                         ["yellowStart1", "yellowStart2", "", "", "32 ", "yellowHome1", "28 ", "", "", "greenStart1", "greenStart2"],
                         ["yellowStart3", "yellowStart4", "", "", "31 ", "30 ", "29 ", "", "", "greenStart3", "greenStart4"]
                       ];
@@ -253,7 +252,7 @@ function generateGameboard()
     	document.getElementById("dice").appendChild(dice);
     	}
         dice.addEventListener("click",rollDice);
-    }
+    } 
 
     function checkMove()
     {
@@ -274,6 +273,7 @@ function generateGameboard()
         }
         if(count==4)
         {
+
         moveFromHome(this,this.id);
         }
     }
@@ -334,6 +334,7 @@ function generateGameboard()
 }
 
 function moveOnBoard(pawn, pawnID, rollValue) {
+  console.log(pawn);
     if(globalNum == 0){
         return 1;
     }
@@ -351,13 +352,49 @@ function moveOnBoard(pawn, pawnID, rollValue) {
 
   var pawnonboard = document.getElementById(pawnID);
   var moveCounter = parseInt(pawn.dataset.movecounter);
-
-  document.getElementById(pawnID).innerHTML = "";
-  document.getElementById(finalPosition).appendChild(pawnonboard);
-    
-  // adding to movecounter
   pawn.dataset.movecounter = moveCounter + rollValue;
-  console.log(pawn);
+  if(pawn.dataset.movecounter>40&&pawn.dataset.movecounter<=44&&pawn.id.includes('yellow'))
+    {
+    var home=parseInt(moveCounter)-40;
+    document.getElementById('yellowHome'+home).appendChild(pawnonboard);
+    console.log(home,pawn);
+    }
+else{
+    document.getElementById(finalPosition).appendChild(pawnonboard);
+    }
+
+  if(pawn.dataset.movecounter>40&&pawn.dataset.movecounter<=44&&pawn.id.includes('red'))
+    {
+    var home=parseInt(moveCounter)-40;
+    document.getElementById('redHome'+home).appendChild(pawnonboard);
+    console.log(home,pawn);
+    }
+else{
+    document.getElementById(finalPosition).appendChild(pawnonboard);
+    }
+
+  if(pawn.dataset.movecounter>40&&pawn.dataset.movecounter<=44&&pawn.id.includes('blue'))
+    {
+    var home=parseInt(moveCounter)-40;
+    document.getElementById('blueHome'+home).appendChild(pawnonboard);
+    console.log(home,pawn);
+    }
+else{
+    document.getElementById(finalPosition).appendChild(pawnonboard);
+    }
+
+  if(pawn.dataset.movecounter>40&&pawn.dataset.movecounter<=44&&pawn.id.includes('green'))
+    {
+    var home=parseInt(moveCounter)-40;
+    document.getElementById('greenHome'+home).appendChild(pawnonboard);
+    console.log(home,pawn);
+    }
+
+else{
+    document.getElementById(finalPosition).appendChild(pawnonboard);
+    }
+  // adding to movecounter
+  
   globalNum=0;
   onTurn();  
 }
@@ -400,19 +437,11 @@ function moveOnBoard(pawn, pawnID, rollValue) {
         turn=0;
         }
         turn++;
-        if (turn == 1) {
-          playerOnTurn == "yellow";
-        }
-        else if (turn == 2) {
-          playerOnTurn == "red";
-        }
-        else if (turn == 3) {
-          playerOnTurn == "blue";
-        }
-        else {
-          playerOnTurn == "green";
-        }
+
         console.log('turn:', turn);
     }
 
+    function kickPawn()
+    {
 
+    }
