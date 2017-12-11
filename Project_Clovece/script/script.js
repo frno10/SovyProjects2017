@@ -22,17 +22,17 @@ function generateGameboard()
                            ["yellowpawn", "yellowpawn", "none", "none", "yellow", "other", "other", "none", "none", "greenpawn", "greenpawn"]
                          ];
     var gameboardID = [
-                        ["redStart1", "redStart2", "", "", "9  ", "10 ", "11 ", "", "", "blueStart1", "blueStart2"],
-                        ["redStart3", "redStart4", "", "", "8  ", "blueHome1", "12 ", "", "", "blueStart3", "blueStart4"],
-                        ["", "", "", "", "7  ", "blueHome2", "13 ", "", "", "", ""],
-                        ["", "", "", "", "6  ", "blueHome3", "14 ", "", "", "", ""],
-                        ["1  ", "2  ", "3  ", "4  ", "5  ", "blueHome4", "15 ", "16 ", "17 ", "18 ", "19 "],
-                        ["40 ", "redHome1", "redHome2", "redHome3", "redHome4", "dice", "greenHome4", "greenHome3", "greenHome2", "greenHome1", "20 "],
-                        ["39 ", "38 ", "37 ", "36 ", "35 ", "yellowHome4", "25 ", "24 ", "23 ", "22 ", "21 "],
-                        ["", "", "", "", "34 ", "yellowHome3", "26 ", "", "", "", ""],
-                        ["", "", "", "", "33 ", "yellowHome2", "27 ", "", "", "", ""],
-                        ["yellowStart1", "yellowStart2", "", "", "32 ", "yellowHome1", "28 ", "", "", "greenStart1", "greenStart2"],
-                        ["yellowStart3", "yellowStart4", "", "", "31 ", "30 ", "29 ", "", "", "greenStart3", "greenStart4"]
+                        ["red-Start-1", "red-Start-2", "", "", "9  ", "10 ", "11 ", "", "", "blue-Start-1", "blue-Start-2"],
+                        ["red-Start-3", "red-Start-4", "", "", "8  ", "blue-Home-1", "12 ", "", "", "blue-Start-3", "blue-Start-4"],
+                        ["", "", "", "", "7  ", "blue-Home-2", "13 ", "", "", "", ""],
+                        ["", "", "", "", "6  ", "blue-Home-3", "14 ", "", "", "", ""],
+                        ["1  ", "2  ", "3  ", "4  ", "5  ", "blue-Home-4", "15 ", "16 ", "17 ", "18 ", "19 "],
+                        ["40 ", "red-Home-1", "red-Home-2", "red-Home-3", "red-Home-4", "dice", "green-Home-4", "green-Home-3", "green-Home-2", "green-Home-1", "20 "],
+                        ["39 ", "38 ", "37 ", "36 ", "35 ", "yellow-Home-4", "25 ", "24 ", "23 ", "22 ", "21 "],
+                        ["", "", "", "", "34 ", "yellow-Home-3", "26 ", "", "", "", ""],
+                        ["", "", "", "", "33 ", "yellow-Home-2", "27 ", "", "", "", ""],
+                        ["yellow-Start-1", "yellow-Start-2", "", "", "32 ", "yellow-Home-1", "28 ", "", "", "green-Start-1", "green-Start-2"],
+                        ["yellow-Start-3", "yellow-Start-4", "", "", "31 ", "30 ", "29 ", "", "", "green-Start-3", "green-Start-4"]
                       ];
     var gameboardDATA = [
                           ["fr1", "fr2", "", "", "avl", "avl", "avl", "", "", "fb1", "fb2"],
@@ -153,40 +153,40 @@ function generateGameboard()
         {
         var startRed=document.createElement("img");
         startRed.setAttribute("src", "img/red.png");
-        startRed.id=('redpawn'+i);
+        startRed.id=('red-pawn-'+i);
         startRed.addEventListener("click",checkMove);
         startRed.setAttribute("data-moveCounter","1");
-        document.getElementById("redStart"+i).appendChild(startRed);
+        document.getElementById("red-Start-"+i).appendChild(startRed);
         }
 
     for(i=1;i<=4;i++)
         {
         var startGreen=document.createElement("img");
         startGreen.setAttribute("src", "img/green.png");
-        startGreen.id=('greenpawn'+i);
+        startGreen.id=('green-pawn-'+i);
         startGreen.addEventListener("click",checkMove);
         startGreen.setAttribute("data-moveCounter","1");
-        document.getElementById("greenStart"+i).appendChild(startGreen);
+        document.getElementById("green-Start-"+i).appendChild(startGreen);
         }
 
     for(i=1;i<=4;i++)
         {
         var startBlue=document.createElement("img");
         startBlue.setAttribute("src", "img/blue.png");
-        startBlue.id=('bluepawn'+i);
+        startBlue.id=('blue-pawn-'+i);
         startBlue.addEventListener("click",checkMove);
         startBlue.setAttribute("data-moveCounter","1");
-        document.getElementById("blueStart"+i).appendChild(startBlue);
+        document.getElementById("blue-Start-"+i).appendChild(startBlue);
         }
 
     for(i=1;i<=4;i++)
         {
         var startYellow=document.createElement("img");
         startYellow.setAttribute("src", "img/yellow.png");
-        startYellow.id=('yellowpawn'+i);
+        startYellow.id=('yellow-pawn-'+i);
         startYellow.addEventListener("click",checkMove);
         startYellow.setAttribute("data-moveCounter","1");
-        document.getElementById("yellowStart"+i).appendChild(startYellow);
+        document.getElementById("yellow-Start-"+i).appendChild(startYellow);
         }
     }
 
@@ -261,7 +261,7 @@ function generateGameboard()
         {
         for(var i=1;i<=4;i++)
         {
-            if(document.getElementById('yellowpawn'+i).parentNode==document.getElementById('yellowStart'+i))
+            if(document.getElementById('yellow-pawn-'+i).parentNode==document.getElementById('yellow-Start-'+i))
             {
             count++;
             }
@@ -281,7 +281,7 @@ function generateGameboard()
         {
         for(var i=1;i<=4;i++)
         {
-            if(document.getElementById('redpawn'+i).parentNode==document.getElementById('redStart'+i))
+            if(document.getElementById('red-pawn-'+i).parentNode==document.getElementById('red-Start-'+i))
             {
             count++;
             }
@@ -299,7 +299,7 @@ function generateGameboard()
         {
         for(var i=1;i<=4;i++)
         {
-            if(document.getElementById('bluepawn'+i).parentNode==document.getElementById('blueStart'+i))
+            if(document.getElementById('blue-pawn-'+i).parentNode==document.getElementById('blue-Start-'+i))
             {
             count++;
             }
@@ -317,7 +317,7 @@ function generateGameboard()
         {
         for(var i=1;i<=4;i++)
         {
-            if(document.getElementById('greenpawn'+i).parentNode==document.getElementById('greenStart'+i))
+            if(document.getElementById('green-pawn-'+i).parentNode==document.getElementById('green-Start-'+i))
             {
             count++;
             }
@@ -334,6 +334,10 @@ function generateGameboard()
 }
 
 function moveOnBoard(pawn, pawnID, rollValue) {
+
+    var splitPawnId = pawn.id.split("-");
+    console.log(splitPawnId[0]);
+
   console.log(pawn);
     if(globalNum == 0){
         return 1;
@@ -350,53 +354,34 @@ function moveOnBoard(pawn, pawnID, rollValue) {
     finalPosition = finalPosition + " ";
   }
 
-  var pawnonboard = document.getElementById(pawnID);
-  var moveCounter = parseInt(pawn.dataset.movecounter);
-  pawn.dataset.movecounter = moveCounter + rollValue;
-  if(pawn.dataset.movecounter>40&&pawn.dataset.movecounter<=44&&pawn.id.includes('yellow'))
-    {
-    var home=parseInt(moveCounter)-40;
-    document.getElementById('yellowHome'+home).appendChild(pawnonboard);
-    console.log(home,pawn);
-    }
-else{
-    document.getElementById(finalPosition).appendChild(pawnonboard);
-    }
+ // adding to movecounter
+ var moveCounter = parseInt(pawn.dataset.movecounter);
+ pawn.dataset.movecounter = moveCounter + rollValue;
 
-  if(pawn.dataset.movecounter>40&&pawn.dataset.movecounter<=44&&pawn.id.includes('red'))
-    {
-    var home=parseInt(moveCounter)-40;
-    document.getElementById('redHome'+home).appendChild(pawnonboard);
-    console.log(home,pawn);
-    }
-else{
-    document.getElementById(finalPosition).appendChild(pawnonboard);
-    }
+if(pawn.dataset.movecounter > 40 && pawn.dataset.movecounter < 45){
+    var i = pawn.dataset.movecounter - 40;
+    var homeField = document.getElementById(splitPawnId[0] + '-Home-' + i);
+   homeField.appendChild(pawn);
+   console.log(pawn,homeField);
 
-  if(pawn.dataset.movecounter>40&&pawn.dataset.movecounter<=44&&pawn.id.includes('blue'))
-    {
-    var home=parseInt(moveCounter)-40;
-    document.getElementById('blueHome'+home).appendChild(pawnonboard);
-    console.log(home,pawn);
-    }
-else{
-    document.getElementById(finalPosition).appendChild(pawnonboard);
-    }
+   globalNum = 0;
+   onTurn();
+}
 
-  if(pawn.dataset.movecounter>40&&pawn.dataset.movecounter<=44&&pawn.id.includes('green'))
-    {
-    var home=parseInt(moveCounter)-40;
-    document.getElementById('greenHome'+home).appendChild(pawnonboard);
-    console.log(home,pawn);
-    }
+else if(pawn.dataset.movecounter > 44){
+    globalNum = 0;
+    onTurn();
+    console.log(pawn,homeField);
+}
 
 else{
-    document.getElementById(finalPosition).appendChild(pawnonboard);
-    }
-  // adding to movecounter
-  
-  globalNum=0;
-  onTurn();  
+    document.getElementById(finalPosition).appendChild(pawn);
+    globalNum = 0;
+    onTurn();
+    console.log(pawn,homeField);
+   
+}
+ 
 }
 
     function moveFromHome(fig,figure)
