@@ -24,13 +24,13 @@ function generateGameboard()
     var gameboardID = [
                         ["redStart1", "redStart2", "", "", "9  ", "10 ", "11 ", "", "", "blueStart1", "blueStart2"],
                         ["redStart3", "redStart4", "", "", "8  ", "blueHome1", "12 ", "", "", "blueStart3", "blueStart4"],
-                        ["", "", "", "", "7  ", "blueHome2", "13 ", "", "", "", ""],
+                        ["name2", "", "", "", "7  ", "blueHome2", "13 ", "", "", "name3", ""],
                         ["", "", "", "", "6  ", "blueHome3", "14 ", "", "", "", ""],
                         ["1  ", "2  ", "3  ", "4  ", "5  ", "blueHome4", "15 ", "16 ", "17 ", "18 ", "19 "],
                         ["40 ", "redHome1", "redHome2", "redHome3", "redHome4", "dice", "greenHome4", "greenHome3", "greenHome2", "greenHome1", "20 "],
                         ["39 ", "38 ", "37 ", "36 ", "35 ", "yellowHome4", "25 ", "24 ", "23 ", "22 ", "21 "],
                         ["", "", "", "", "34 ", "yellowHome3", "26 ", "", "", "", ""],
-                        ["", "", "", "", "33 ", "yellowHome2", "27 ", "", "", "", ""],
+                        ["name1", "", "", "", "33 ", "yellowHome2", "27 ", "", "", "name4", ""],
                         ["yellowStart1", "yellowStart2", "", "", "32 ", "yellowHome1", "28 ", "", "", "greenStart1", "greenStart2"],
                         ["yellowStart3", "yellowStart4", "", "", "31 ", "30 ", "29 ", "", "", "greenStart3", "greenStart4"]
                       ];
@@ -353,6 +353,7 @@ function moveOnBoard(pawn, pawnID, rollValue) {
 
   document.getElementById(pawnID).innerHTML = "";
   document.getElementById(finalPosition).appendChild(pawnonboard);
+    
   // adding to movecounter
   pawn.dataset.movecounter = moveCounter + rollValue;
   console.log(pawn);
