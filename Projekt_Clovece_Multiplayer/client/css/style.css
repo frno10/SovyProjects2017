@@ -1,0 +1,72 @@
+body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url(../img/back.jpg);
+    position: fixed;
+}
+.block
+{
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  float: left;
+}
+
+.redpawn
+{
+background: #c61a1a;  
+cursor: pointer;
+}
+.bluepawn
+{
+background: #2f4f98;
+cursor: pointer;
+}
+.greenpawn
+{
+background: #2e6921;
+cursor: pointer;
+}
+.yellowpawn
+{
+background: #fec11a;
+cursor: pointer;
+}
+
+
+#content
+{
+width: 600px;
+height: 600px;
+padding-left: 25px;
+margin: 0 auto;
+padding-top: 25px;
+padding-bottom: 50px;
+top: 50%;
+transform: translateY(6%);
+}
+
+#login
+{
+margin: 200px auto;
+}
+
+label
+{
+font-family: sans-serif;
+font-size: 27px;
+padding-left: 30px;
+padding-top: 5px;    
+}
+
+button
+{
+margin-left: 30%;
+}
+
+input
+{
+margin-left: 10px;
+}
