@@ -25,13 +25,13 @@ function generateGameboard()
     var gameboardID = [
                         ["red-Start-1", "red-Start-2", "", "", "9  ", "10 ", "11 ", "", "", "blue-Start-1", "blue-Start-2"],
                         ["red-Start-3", "red-Start-4", "", "", "8  ", "blue-Home-1", "12 ", "", "", "blue-Start-3", "blue-Start-4"],
-                        ["name2", "", "", "", "7  ", "blue-Home-2", "13 ", "", "", "name3", ""],
+                        ["name2", "", "onturn2", "", "7  ", "blue-Home-2", "13 ", "", "onturn3", "name3", ""],
                         ["", "", "", "", "6  ", "blue-Home-3", "14 ", "", "", "", ""],
                         ["1  ", "2  ", "3  ", "4  ", "5  ", "blue-Home-4", "15 ", "16 ", "17 ", "18 ", "19 "],
                         ["40 ", "red-Home-1", "red-Home-2", "red-Home-3", "red-Home-4", "dice", "green-Home-4", "green-Home-3", "green-Home-2", "green-Home-1", "20 "],
                         ["39 ", "38 ", "37 ", "36 ", "35 ", "yellow-Home-4", "25 ", "24 ", "23 ", "22 ", "21 "],
                         ["", "", "", "", "34 ", "yellow-Home-3", "26 ", "", "", "", ""],
-                        ["name1", "", "", "", "33 ", "yellow-Home-2", "27 ", "", "", "name4", ""],
+                        ["name1", "", "onturn1", "", "33 ", "yellow-Home-2", "27 ", "", "onturn4", "name4", ""],
                         ["yellow-Start-1", "yellow-Start-2", "", "", "32 ", "yellow-Home-1", "28 ", "", "", "green-Start-1", "green-Start-2"],
                         ["yellow-Start-3", "yellow-Start-4", "", "", "31 ", "30 ", "29 ", "", "", "green-Start-3", "green-Start-4"]
                       ];
@@ -160,6 +160,7 @@ function generateGameboard()
             document.getElementById("name"+i).style.fontWeight='bold';
 
         }
+         
     for(i=1;i<=4;i++)
         {
         var startRed=document.createElement("img");
@@ -197,8 +198,28 @@ function generateGameboard()
         startYellow.id=('yellow-pawn-'+i);
         startYellow.addEventListener("click",checkMove);
         startYellow.setAttribute("data-moveCounter","1");
-        document.getElementById("yellow-Start-"+i).appendChild(startYellow);
+        document.getElementById("yellow-Start-"+i).appendChild(startYellow);        
         }
+        for(i=1;i<=4;i++)
+            {
+            document.getElementById('yellow-pawn-'+i).style.cursor="pointer";
+
+            }
+         for(i=1;i<=4;i++)
+            {
+            document.getElementById('green-pawn-'+i).style.cursor="pointer";
+
+            }
+         for(i=1;i<=4;i++)
+            {
+            document.getElementById('blue-pawn-'+i).style.cursor="pointer";
+
+            }
+         for(i=1;i<=4;i++)
+            {
+            document.getElementById('red-pawn-'+i).style.cursor="pointer";
+
+            }
     }
 
     function generateDice()
@@ -434,7 +455,32 @@ else{
         turn=0;
         }
         turn++;
+        if(turn==1)
+            {
+                //document.getElementById("onturn4").innerHTML="";
+                var circle=document.createElement("img");
+                circle.setAttribute("src", "img/turn.png");
+                document.getElementById("onturn1").appendChild(circle);   
+            }
+        else if(turn==2){
+                document.getElementById("onturn1").innerHTML="";
+                var circle=document.createElement("img");
+                circle.setAttribute("src", "img/turn.png");
+                document.getElementById("onturn2").appendChild(circle);
+        }else if(turn==3){
+                document.getElementById("onturn2").innerHTML="";
+                var circle=document.createElement("img");
+                circle.setAttribute("src", "img/turn.png");
+                document.getElementById("onturn3").appendChild(circle);
 
+        }else{
+                document.getElementById("onturn3").innerHTML="";
+                var circle=document.createElement("img");
+                circle.setAttribute("src", "img/turn.png");
+                document.getElementById("onturn4").appendChild(circle);
+
+        }
+            
         console.log('turn:', turn);
     }
 
