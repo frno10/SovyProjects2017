@@ -1,13 +1,13 @@
 var globalNum;
 var turn=1;
-
 var playerOnTurn = "yellow";
-// generateMoveSet();
+var playerMoved = true;
 
 function generateGameboard()
 {
     var board='url(img/board.png)';
     document.getElementById('content').style.backgroundImage=board;
+    document.getElementById('content').style.boxShadow='13px 13px 27px 7px rgba(0,0,0,0.75)';
     var gameboardClass = [
                            ["redpawn", "redpawn", "none", "none", "other", "other", "blue", "none", "none", "bluepawn", "bluepawn"],
                            ["redpawn", "redpawn", "none", "none", "other", "blue", "other", "none", "none", "bluepawn", "bluepawn"],
@@ -24,13 +24,13 @@ function generateGameboard()
     var gameboardID = [
                         ["red-Start-1", "red-Start-2", "", "", "9  ", "10 ", "11 ", "", "", "blue-Start-1", "blue-Start-2"],
                         ["red-Start-3", "red-Start-4", "", "", "8  ", "blue-Home-1", "12 ", "", "", "blue-Start-3", "blue-Start-4"],
-                        ["", "", "", "", "7  ", "blue-Home-2", "13 ", "", "", "", ""],
+                        ["name2", "", "onturn2", "", "7  ", "blue-Home-2", "13 ", "", "onturn3", "name3", ""],
                         ["", "", "", "", "6  ", "blue-Home-3", "14 ", "", "", "", ""],
                         ["1  ", "2  ", "3  ", "4  ", "5  ", "blue-Home-4", "15 ", "16 ", "17 ", "18 ", "19 "],
                         ["40 ", "red-Home-1", "red-Home-2", "red-Home-3", "red-Home-4", "dice", "green-Home-4", "green-Home-3", "green-Home-2", "green-Home-1", "20 "],
                         ["39 ", "38 ", "37 ", "36 ", "35 ", "yellow-Home-4", "25 ", "24 ", "23 ", "22 ", "21 "],
                         ["", "", "", "", "34 ", "yellow-Home-3", "26 ", "", "", "", ""],
-                        ["", "", "", "", "33 ", "yellow-Home-2", "27 ", "", "", "", ""],
+                        ["name1", "", "onturn1", "", "33 ", "yellow-Home-2", "27 ", "", "onturn4", "name4", ""],
                         ["yellow-Start-1", "yellow-Start-2", "", "", "32 ", "yellow-Home-1", "28 ", "", "", "green-Start-1", "green-Start-2"],
                         ["yellow-Start-3", "yellow-Start-4", "", "", "31 ", "30 ", "29 ", "", "", "green-Start-3", "green-Start-4"]
                       ];
@@ -92,63 +92,21 @@ function generateGameboard()
        document.getElementById("content").appendChild(myBlock);
      }
 
-
-     function setLogin()
-     {
-        var myLogin;
-        myLogin=document.createElement('div');
-        myLogin.id='login';
-        myLogin.classname='csslogin';
-        myLogin.style.width='200px';
-        myLogin.style.height='160px';
-        myLogin.style.borderRadius='30px';
-        myLogin.style.background="lightgrey"
-        document.getElementById('content').style.margin='0 auto';
-        document.getElementById('content').appendChild(myLogin);
-
-        var label=document.createElement('label');
-        label.htmlFor="text";
-        label.innerHTML="Your name: ";
-        document.getElementById('login').appendChild(label);
-
-        var input=document.createElement('input');
-        input.type='text';
-        input.id="inputField";
-        document.getElementById('login').appendChild(input);
-
-
-        var eol=document.createElement('br');
-        document.getElementById('login').appendChild(eol);
-        var eol2=document.createElement('br');
-        document.getElementById('login').appendChild(eol2);
-        var button=document.createElement('button');
-        button.className="btn btn-md btn-dark";
-        button.style.width="80px";
-        button.innerHTML='OK';
-        document.getElementById('login').appendChild(button);
-        button.addEventListener("click", clearLogin);
-     }
-
-    function clearLogin()
-    {
-        var input = document.getElementById("inputField");
-        if(input.value=="")
-         {
-         alert("Please, enter the name!");
-         }
-
-         else
-         {
-         document.getElementById('login').remove();
-         generateGameboard();
-         generateFigures();
-         generateDice();
-         }
-    }
-
     function generateFigures()
     {
-    var i;
+    generateGameboard();
+    generateDice();
+        var i;
+        var circle=document.createElement("img");
+        circle.setAttribute("src", "img/turn.png");
+        document.getElementById("onturn1").appendChild(circle);
+        for(i=1;i<=4;i++)
+        {
+            document.getElementById('name'+i).innerHTML="Player"+i;
+            document.getElementById("name"+i).style.fontSize='25px';
+            document.getElementById("name"+i).style.fontWeight='bold';
+        }
+         
     for(i=1;i<=4;i++)
         {
         var startRed=document.createElement("img");
@@ -186,8 +144,28 @@ function generateGameboard()
         startYellow.id=('yellow-pawn-'+i);
         startYellow.addEventListener("click",checkMove);
         startYellow.setAttribute("data-moveCounter","1");
-        document.getElementById("yellow-Start-"+i).appendChild(startYellow);
+        document.getElementById("yellow-Start-"+i).appendChild(startYellow);        
         }
+        for(i=1;i<=4;i++)
+            {
+            document.getElementById('yellow-pawn-'+i).style.cursor="pointer";
+
+            }
+         for(i=1;i<=4;i++)
+            {
+            document.getElementById('green-pawn-'+i).style.cursor="pointer";
+
+            }
+         for(i=1;i<=4;i++)
+            {
+            document.getElementById('blue-pawn-'+i).style.cursor="pointer";
+
+            }
+         for(i=1;i<=4;i++)
+            {
+            document.getElementById('red-pawn-'+i).style.cursor="pointer";
+
+            }
     }
 
     function generateDice()
@@ -201,6 +179,9 @@ function generateGameboard()
 
     function rollDice()
     {
+        if(playerMoved == false){
+            return 0;
+        }
     var dice=document.createElement("img");
     var rollNum=Math.floor(Math.random()*6+1);
     globalNum=rollNum;
@@ -252,91 +233,60 @@ function generateGameboard()
     	document.getElementById("dice").appendChild(dice);
     	}
         dice.addEventListener("click",rollDice);
+        playerMoved = false;
+        isMovePossible(globalNum);
     } 
+
+    function isMovePossible(rollValue){
+        var found = 0;
+        for(i=1;i<5;i++){
+            var currentPawn = document.getElementById(playerOnTurn + '-pawn-' + i);
+            var currentStarter = document.getElementById(playerOnTurn + '-Start-' + i);
+            var moveCounter = parseInt(currentPawn.dataset.movecounter);
+            
+            currentPawn.dataset.movecounter = moveCounter + rollValue;       
+            console.log(currentPawn);
+
+            if(currentPawn.dataset.movecounter > 44 || currentPawn.parentNode == currentStarter){;
+                if(rollValue != 6){
+                    found++;
+                }
+            }
+                
+                currentPawn.dataset.movecounter -=  rollValue;  
+        }
+
+         if(found == 4){
+             playerMoved = true;
+             globalNum = 0;
+             onTurn();
+         }
+
+    }
 
     function checkMove()
     {
-        var count=0;
-        if(this.id.includes('yellow')  && turn == 1)
-        {
-        for(var i=1;i<=4;i++)
-        {
-            if(document.getElementById('yellow-pawn-'+i).parentNode==document.getElementById('yellow-Start-'+i))
-            {
-            count++;
-            }
-
-            else
-            {
-            moveOnBoard(this, this.id, globalNum);
-            }
-        }
-        if(count==4)
-        {
-
-        moveFromHome(this,this.id);
-        }
-    }
-        if(this.id.includes('red')  && turn == 2)
-        {
-        for(var i=1;i<=4;i++)
-        {
-            if(document.getElementById('red-pawn-'+i).parentNode==document.getElementById('red-Start-'+i))
-            {
-            count++;
-            }
-            else
-            {
-            moveOnBoard(this, this.id, globalNum);
-            }
-        }
-        if(count==4)
+        playerMoved = true;
+        console.log('rolled'+globalNum)
+        var idFigure = this.id.split("-");
+        // console.log(idFigure,playerOnTurn,turn);
+        var splitted=document.getElementById(playerOnTurn + '-Start-' + idFigure[2]);
+        // console.log(idFigure,this.parentNode,splitted);
+        if(this.parentNode == splitted)
         {
         moveFromHome(this,this.id);
         }
+        else if(idFigure[0] == playerOnTurn)
+        {
+        moveOnBoard(this, this.id, globalNum); 
+        }
+    
     }
-        if(this.id.includes('blue')  && turn == 3)
-        {
-        for(var i=1;i<=4;i++)
-        {
-            if(document.getElementById('blue-pawn-'+i).parentNode==document.getElementById('blue-Start-'+i))
-            {
-            count++;
-            }
-            else
-            {
-            moveOnBoard(this, this.id, globalNum);
-            }
-        }
-        if(count==4)
-        {
-        moveFromHome(this,this.id);
-        }
-    }
-        if(this.id.includes('green') && turn == 4)
-        {
-        for(var i=1;i<=4;i++)
-        {
-            if(document.getElementById('green-pawn-'+i).parentNode==document.getElementById('green-Start-'+i))
-            {
-            count++;
-            }
-            else
-            {
-            moveOnBoard(this, this.id, globalNum);
-            }
-        }
-        if(count==4)
-        {
-        moveFromHome(this,this.id);
-        }
-    }
-}
 
 function moveOnBoard(pawn, pawnID, rollValue) {
 
     var splitPawnId = pawn.id.split("-");
-    console.log(splitPawnId[0]);
+    // console.log(splitPawnId[0]);
 
   console.log(pawn);
     if(globalNum == 0){
@@ -362,24 +312,44 @@ if(pawn.dataset.movecounter > 40 && pawn.dataset.movecounter < 45){
     var i = pawn.dataset.movecounter - 40;
     var homeField = document.getElementById(splitPawnId[0] + '-Home-' + i);
    homeField.appendChild(pawn);
-   console.log(pawn,homeField);
-
-   globalNum = 0;
-   onTurn();
+//    console.log(pawn,homeField);
+    if(globalNum!=6)
+        {
+        globalNum=0;
+        onTurn();
+        }
+    else
+    {
+    globalNum=0;
+    }
 }
 
 else if(pawn.dataset.movecounter > 44){
     pawn.dataset.movecounter -= rollValue;
-    globalNum = 0;
-    onTurn();
+    if(globalNum!=6)
+        {
+        globalNum=0;
+        onTurn();
+        }
+    else
+    {
+    globalNum=0;
+    }
     console.log(pawn,homeField);
 }
 
 else{
     document.getElementById(finalPosition).appendChild(pawn);
-    globalNum = 0;
-    onTurn();
     console.log(pawn,homeField);
+    if(globalNum!=6)
+        {
+        globalNum=0;
+        onTurn();
+        }
+    else
+    {
+    globalNum=0;
+    }
    
 }
  
@@ -387,43 +357,79 @@ else{
 
     function moveFromHome(fig,figure)
     {
+        // console.log('rolled'+globalNum);
         if((parseInt(globalNum)==6)&&(parseInt(turn)==1)&&(figure.includes("yellow")))
         {
         document.getElementById("31 ").appendChild(fig);
         globalNum=0;
-        // onTurn();
         }
 
         if((parseInt(globalNum)==6)&&(parseInt(turn)==2)&&(figure.includes("red")))
         {
         document.getElementById("1  ").appendChild(fig);
         globalNum=0;
-        // onTurn();
         }
 
         if((parseInt(globalNum)==6)&&(parseInt(turn)==3)&&(figure.includes("blue")))
         {
         document.getElementById("11 ").appendChild(fig);
         globalNum=0;
-        // onTurn();
         }
 
         if((parseInt(globalNum)==6)&&(parseInt(turn)==4)&&(figure.includes("green")))
         {
         document.getElementById("21 ").appendChild(fig);
         globalNum=0;
-        // onTurn();
         }
+        
     }
 
     function onTurn()
-    {
+    {   
         if(turn==4)
         {
         turn=0;
         }
         turn++;
+        if (turn == 1) {
+        playerOnTurn = "yellow";
+        }
+        else if (turn == 2) {
+        playerOnTurn = "red";
+        }
+        else if (turn == 3) {
+        playerOnTurn = "blue";
+        }
+        else {
+        playerOnTurn = "green";
+        }
+        
+        if(turn==1)
+            {
+            document.getElementById("onturn4").innerHTML="";
+            var circle=document.createElement("img");
+            circle.setAttribute("src", "img/turn.png");
+            document.getElementById("onturn1").appendChild(circle);   
+            }
+        else if(turn==2){
+                document.getElementById("onturn1").innerHTML="";
+                var circle=document.createElement("img");
+                circle.setAttribute("src", "img/turn.png");
+                document.getElementById("onturn2").appendChild(circle);
+        }else if(turn==3){
+                document.getElementById("onturn2").innerHTML="";
+                var circle=document.createElement("img");
+                circle.setAttribute("src", "img/turn.png");
+                document.getElementById("onturn3").appendChild(circle);
 
+        }else{
+                document.getElementById("onturn3").innerHTML="";
+                var circle=document.createElement("img");
+                circle.setAttribute("src", "img/turn.png");
+                document.getElementById("onturn4").appendChild(circle);
+
+        }
+            
         console.log('turn:', turn);
     }
 

@@ -4,6 +4,7 @@ body{
     height: 100%;
     width: 100%;
     background-image: url(../img/back.jpg);
+    background-size: cover;
     position: fixed;
 }
 .block
@@ -13,28 +14,6 @@ body{
   margin: 5px;
   float: left;
 }
-
-.redpawn
-{
-background: #c61a1a;  
-cursor: pointer;
-}
-.bluepawn
-{
-background: #2f4f98;
-cursor: pointer;
-}
-.greenpawn
-{
-background: #2e6921;
-cursor: pointer;
-}
-.yellowpawn
-{
-background: #fec11a;
-cursor: pointer;
-}
-
 
 #content
 {
