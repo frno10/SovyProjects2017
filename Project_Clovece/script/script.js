@@ -1,6 +1,7 @@
 var globalNum;
 var turn=1;
 var playerOnTurn = "yellow";
+var playerMoved = true;
 
 function generateGameboard()
 {
@@ -178,6 +179,9 @@ function generateGameboard()
 
     function rollDice()
     {
+        if(playerMoved == false){
+            return 0;
+        }
     var dice=document.createElement("img");
     var rollNum=Math.floor(Math.random()*6+1);
     globalNum=rollNum;
@@ -229,6 +233,7 @@ function generateGameboard()
     	document.getElementById("dice").appendChild(dice);
     	}
         dice.addEventListener("click",rollDice);
+        playerMoved = false;
         isMovePossible(globalNum);
     } 
 
@@ -252,6 +257,7 @@ function generateGameboard()
         }
 
          if(found == 4){
+             playerMoved = true;
              globalNum = 0;
              onTurn();
          }
@@ -260,6 +266,7 @@ function generateGameboard()
 
     function checkMove()
     {
+        playerMoved = true;
         console.log('rolled'+globalNum)
         var idFigure = this.id.split("-");
         // console.log(idFigure,playerOnTurn,turn);
