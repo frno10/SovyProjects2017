@@ -8,6 +8,7 @@ function generateGameboard()
 {
     var board='url(img/board.png)';
     document.getElementById('content').style.backgroundImage=board;
+    document.getElementById('content').style.boxShadow='13px 13px 27px 7px rgba(0,0,0,0.75)';
     var gameboardClass = [
                            ["redpawn", "redpawn", "none", "none", "other", "other", "blue", "none", "none", "bluepawn", "bluepawn"],
                            ["redpawn", "redpawn", "none", "none", "other", "blue", "other", "none", "none", "bluepawn", "bluepawn"],
@@ -24,13 +25,13 @@ function generateGameboard()
     var gameboardID = [
                         ["red-Start-1", "red-Start-2", "", "", "9  ", "10 ", "11 ", "", "", "blue-Start-1", "blue-Start-2"],
                         ["red-Start-3", "red-Start-4", "", "", "8  ", "blue-Home-1", "12 ", "", "", "blue-Start-3", "blue-Start-4"],
-                        ["", "", "", "", "7  ", "blue-Home-2", "13 ", "", "", "", ""],
+                        ["name2", "", "", "", "7  ", "blue-Home-2", "13 ", "", "", "name3", ""],
                         ["", "", "", "", "6  ", "blue-Home-3", "14 ", "", "", "", ""],
                         ["1  ", "2  ", "3  ", "4  ", "5  ", "blue-Home-4", "15 ", "16 ", "17 ", "18 ", "19 "],
                         ["40 ", "red-Home-1", "red-Home-2", "red-Home-3", "red-Home-4", "dice", "green-Home-4", "green-Home-3", "green-Home-2", "green-Home-1", "20 "],
                         ["39 ", "38 ", "37 ", "36 ", "35 ", "yellow-Home-4", "25 ", "24 ", "23 ", "22 ", "21 "],
                         ["", "", "", "", "34 ", "yellow-Home-3", "26 ", "", "", "", ""],
-                        ["", "", "", "", "33 ", "yellow-Home-2", "27 ", "", "", "", ""],
+                        ["name1", "", "", "", "33 ", "yellow-Home-2", "27 ", "", "", "name4", ""],
                         ["yellow-Start-1", "yellow-Start-2", "", "", "32 ", "yellow-Home-1", "28 ", "", "", "green-Start-1", "green-Start-2"],
                         ["yellow-Start-3", "yellow-Start-4", "", "", "31 ", "30 ", "29 ", "", "", "green-Start-3", "green-Start-4"]
                       ];
@@ -151,7 +152,12 @@ function generateGameboard()
     {
     generateGameboard();
     generateDice();
-    var i;
+         var i;
+        for(i=1;i<=4;i++)
+        {
+            document.getElementById('name'+i).innerHTML="Player"+i;
+            document.getElementById("name"+i).style.fontSize='25px';
+        }
     for(i=1;i<=4;i++)
         {
         var startRed=document.createElement("img");
