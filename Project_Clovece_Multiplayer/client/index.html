@@ -70,9 +70,9 @@
                       sourceID: "non"
                   });
                   document.getElementById("content").innerHTML = "";
-                  generateGameboard();
-                  generateFigures();
-                  generateDice();
+                  setTimeout(generateGameboard(), 100);
+                  setTimeout(generateFigures(), 900);
+                  setTimeout(generateDice(), 300);
                 }
               }
 
