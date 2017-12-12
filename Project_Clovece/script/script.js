@@ -229,14 +229,42 @@ function generateGameboard()
     	document.getElementById("dice").appendChild(dice);
     	}
         dice.addEventListener("click",rollDice);
+        isMovePossible(globalNum);
     } 
+
+    function isMovePossible(rollValue){
+        var found = 0;
+        for(i=1;i<5;i++){
+            var currentPawn = document.getElementById(playerOnTurn + '-pawn-' + i);
+            var currentStarter = document.getElementById(playerOnTurn + '-Start-' + i);
+            var moveCounter = parseInt(currentPawn.dataset.movecounter);
+            
+            currentPawn.dataset.movecounter = moveCounter + rollValue;       
+            console.log(currentPawn);
+
+            if(currentPawn.dataset.movecounter > 44 || currentPawn.parentNode == currentStarter){;
+                if(rollValue != 6){
+                    found++;
+                }
+            }
+                
+                currentPawn.dataset.movecounter -=  rollValue;  
+        }
+
+         if(found == 4){
+             globalNum = 0;
+             onTurn();
+         }
+
+    }
 
     function checkMove()
     {
+        console.log('rolled'+globalNum)
         var idFigure = this.id.split("-");
-        console.log(idFigure,playerOnTurn,turn);
+        // console.log(idFigure,playerOnTurn,turn);
         var splitted=document.getElementById(playerOnTurn + '-Start-' + idFigure[2]);
-        console.log(idFigure,this.parentNode,splitted);
+        // console.log(idFigure,this.parentNode,splitted);
         if(this.parentNode == splitted)
         {
         moveFromHome(this,this.id);
@@ -251,7 +279,7 @@ function generateGameboard()
 function moveOnBoard(pawn, pawnID, rollValue) {
 
     var splitPawnId = pawn.id.split("-");
-    console.log(splitPawnId[0]);
+    // console.log(splitPawnId[0]);
 
   console.log(pawn);
     if(globalNum == 0){
@@ -277,7 +305,7 @@ if(pawn.dataset.movecounter > 40 && pawn.dataset.movecounter < 45){
     var i = pawn.dataset.movecounter - 40;
     var homeField = document.getElementById(splitPawnId[0] + '-Home-' + i);
    homeField.appendChild(pawn);
-   console.log(pawn,homeField);
+//    console.log(pawn,homeField);
     if(globalNum!=6)
         {
         globalNum=0;
@@ -322,6 +350,7 @@ else{
 
     function moveFromHome(fig,figure)
     {
+        // console.log('rolled'+globalNum);
         if((parseInt(globalNum)==6)&&(parseInt(turn)==1)&&(figure.includes("yellow")))
         {
         document.getElementById("31 ").appendChild(fig);
@@ -345,6 +374,7 @@ else{
         document.getElementById("21 ").appendChild(fig);
         globalNum=0;
         }
+        
     }
 
     function onTurn()
