@@ -152,11 +152,18 @@ function generateGameboard()
     {
     generateGameboard();
     generateDice();
+<<<<<<< HEAD
         var circle=document.createElement("img");
         circle.setAttribute("src", "img/turn.png");
         document.getElementById("onturn1").appendChild(circle);
         
         var i;
+=======
+         var i;
+        var circle=document.createElement("img");
+        circle.setAttribute("src", "img/turn.png");
+        document.getElementById("onturn1").appendChild(circle);
+>>>>>>> refs/remotes/origin/master
         for(i=1;i<=4;i++)
         {
             document.getElementById('name'+i).innerHTML="Player"+i;
