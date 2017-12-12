@@ -153,6 +153,9 @@ function generateGameboard()
     generateGameboard();
     generateDice();
          var i;
+        var circle=document.createElement("img");
+        circle.setAttribute("src", "img/turn.png");
+        document.getElementById("onturn1").appendChild(circle);
         for(i=1;i<=4;i++)
         {
             document.getElementById('name'+i).innerHTML="Player"+i;
