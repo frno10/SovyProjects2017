@@ -157,6 +157,8 @@ function generateGameboard()
         {
             document.getElementById('name'+i).innerHTML="Player"+i;
             document.getElementById("name"+i).style.fontSize='25px';
+            document.getElementById("name"+i).style.fontWeight='bold';
+
         }
     for(i=1;i<=4;i++)
         {
