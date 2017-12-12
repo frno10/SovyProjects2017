@@ -92,7 +92,7 @@ function generateGameboard()
        document.getElementById("content").appendChild(myBlock);
      }
 
-
+    /*
      function setLogin()
      {
         var myLogin;
@@ -145,9 +145,12 @@ function generateGameboard()
          generateDice();
          }
     }
+    */
 
     function generateFigures()
     {
+    generateGameboard();
+    generateDice();
     var i;
     for(i=1;i<=4;i++)
         {
