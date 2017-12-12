@@ -241,7 +241,7 @@ function generateGameboard()
         {
         moveFromHome(this,this.id);
         }
-        else
+        else if(idFigure[0] == playerOnTurn)
         {
         moveOnBoard(this, this.id, globalNum); 
         }
