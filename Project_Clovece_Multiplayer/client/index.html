@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/client/script/gameLogic.js"></script>
     <link rel="stylesheet" href="/client/css/bootstrap.css">
     <link rel="stylesheet" href="/client/css/bootstrap.min.css">
     <link rel="stylesheet" href="/client/css/style.css">
@@ -31,7 +32,7 @@
          <label for="">Game Name</label>
          <input id="myGame" class = "inputField" type="text" placeholder="Type Name of the Game">
          <br>
-         <button href="index.html" class="btn btn-lg btn-dark" onclick="newPlayerLogin()">Start Game</button>
+         <button class="btn btn-lg btn-dark" onclick="newPlayerLogin()">Start Game</button>
          </form>
          </div>
      </div>
@@ -39,7 +40,6 @@
 
 
             <script src="/client/script/preloader.js"></script>
-
             <script src="/client/script/gameLogic.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
             <script type="text/javascript">
@@ -62,7 +62,6 @@
                 myName = name;
                 myGame = game;
                 if (name == "" || game == "") {
-
                 }
                 else {
                   socket.emit('newPlayer',{
@@ -89,7 +88,7 @@
               }
 
               socket.on('serverNewPlayer',function(data){
-                  if (data.game == myGame) {
+                  if (data.game == myGame && iamPlayer != "spectator") {
                     //console.log("my game");
                     if (data.destinationID != myID) {
                       //console.log("not me");
@@ -115,11 +114,9 @@
                       });
                     }
                     else {
-                      //console.log("its me");
                     }
                   }
                   else {
-                    //console.log("not my game");
                   }
               });
 
@@ -151,10 +148,12 @@
               });
 
               socket.on('serverWhatIsYourGame',function(data){
+                if (iamPlayer != "spectator") {
 
+                }
               });
               socket.on('serverActiveGames',function(data){
-                  if (loginMenu == 0) {
+                  if (loginMenu == 1) {
 
                   }
               });

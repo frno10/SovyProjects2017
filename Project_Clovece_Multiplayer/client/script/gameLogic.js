@@ -97,7 +97,6 @@ function generateGameboard()
         for (var j = 1; j <= 4; j++) {
           var startPawn=document.createElement("img");
             if (iamPlayer == "spectator" || iamPlayer > 4) {
-
             }
             else {
               startPawn.addEventListener("click",checkMove);
@@ -116,7 +115,11 @@ function generateGameboard()
       document.getElementById("dice").innerHTML="";
       var dice=document.createElement("img");
       dice.setAttribute("src", "/client/img/roll.png");
-      dice.addEventListener("click", rollDice);
+      if (iamPlayer == "spectator" || iamPlayer > 4) {
+      }
+      else {
+        dice.addEventListener("click", rollDice);
+      }
       dice.id = "diceIMG";
       document.getElementById("dice").appendChild(dice);
     }
@@ -195,7 +198,7 @@ function generateGameboard()
       var count=0;
       if(this.id.includes(playerOnTurn)  && turn == iamPlayer)
       {
-        if (isPawnsOnStart(this.id) {
+        if (isPawnsOnStart(this.id)) {
           moveFromHome(this,this.id);
         }
         else {

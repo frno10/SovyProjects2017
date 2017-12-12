@@ -20,15 +20,19 @@ io.sockets.on('connection', function(socket){
     //});
 
     socket.on('youArePlayer',function(data){
-      console.log('youArePlayer');
-      console.log(data);
         socket.broadcast.emit('serverYouArePlayer',data);
     });
 
     socket.on('newPlayer',function(data){
-      console.log('newPlayer');
-      console.log(data);
         socket.broadcast.emit('serverNewPlayer',data);
+    });
+
+    socket.on('whatGamesAreActive',function(data){
+        socket.broadcast.emit('serverWhatIsYourGame',data);
+    });
+
+    socket.on('nextPlayer',function(data){
+        socket.broadcast.emit('serverPlayerOnTurn',data);
     });
 
 });
