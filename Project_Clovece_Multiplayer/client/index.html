@@ -49,6 +49,8 @@
               var iamPlayer = 1;
               var numberOfPlayers = 1;
               var playersInGame = [];
+              var activeGames = [];
+              var loginMenu = 1;
 
               //WEB SOCKETS
 
@@ -69,11 +71,21 @@
                       destinationID: myID,
                       sourceID: "non"
                   });
+                  loginMenu = 0;
                   document.getElementById("content").innerHTML = "";
                   setTimeout(generateGameboard(), 100);
                   setTimeout(generateFigures(), 900);
                   setTimeout(generateDice(), 300);
                 }
+              }
+
+              var echoNextPlayer = function(){
+                socket.emit('nextPlayer',{
+                    sourceID: myID,
+                    game: myGame,
+                    player: turn,
+                    playerColor: playerOnTurn
+                });
               }
 
               socket.on('serverNewPlayer',function(data){
@@ -129,6 +141,21 @@
 
                   if (data.playerNumber > numberOfPlayers || data.playerNumber == "spectator") {
                     numberOfPlayers = data.playerNumber;
+                  }
+              });
+
+              socket.on('serverPlayerOnTurn',function(data){
+                  if (data.game == myGame) {
+
+                  }
+              });
+
+              socket.on('serverWhatIsYourGame',function(data){
+
+              });
+              socket.on('serverActiveGames',function(data){
+                  if (loginMenu == 0) {
+
                   }
               });
             </script>

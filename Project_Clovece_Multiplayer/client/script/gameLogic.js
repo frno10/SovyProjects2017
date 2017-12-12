@@ -1,6 +1,7 @@
 var globalNum;
 var turn=1;
-
+var numberOfRolls = 1;
+var playerOnTurnRolls = 0;
 var playerOnTurn = "yellow";
 // generateMoveSet();
 
@@ -89,20 +90,20 @@ function generateGameboard()
     {
       var i = 0;
       var j = 0;
-      var startPawn=document.createElement("img");
-        if (iamPlayer == "spectator" || iamPlayer > 4) {
-
-        }
-        else {
-          startPawn.addEventListener("click",checkMove);
-        }
-        startPawn.setAttribute("data-moveCounter","1");
-        startPawn.setAttribute("data-possition","home");
       var pawnColor = ["yellow", "red", "blue", "green"];
       var pawnImg = "/client/img/";
       for (var i = 0; i < 4; i++) {
         pawnImg = "/client/img/"+pawnColor[i]+".png";
         for (var j = 1; j <= 4; j++) {
+          var startPawn=document.createElement("img");
+            if (iamPlayer == "spectator" || iamPlayer > 4) {
+
+            }
+            else {
+              startPawn.addEventListener("click",checkMove);
+            }
+            startPawn.setAttribute("data-moveCounter","1");
+            startPawn.setAttribute("data-possition","home");
           startPawn.setAttribute("src", pawnImg);
           startPawn.id=(pawnColor[i]+"-pawn-"+j);
           document.getElementById(pawnColor[i]+"-Start-"+j).appendChild(startPawn);
@@ -116,17 +117,50 @@ function generateGameboard()
       var dice=document.createElement("img");
       dice.setAttribute("src", "/client/img/roll.png");
       dice.addEventListener("click", rollDice);
+      dice.id = "diceIMG";
       document.getElementById("dice").appendChild(dice);
     }
 
     function reGenerateDice() {
       globalNum = 0;
-      document.getElementById("dice").setAttribute("src", "/client/img/roll.png");
+      document.getElementById("diceIMG").setAttribute("src", "/client/img/roll.png");
+    }
+
+    function isAllPawnsOnStart()
+    {
+      var counter = 0;
+      var pawnInHome = playerOnTurn;
+      var positionOfPawn = "home";
+      for (var i = 1; i <= 4; i++) {
+        pawnInHome = playerOnTurn+"-pawn-"+i;
+        positionOfPawn = document.getElementById(pawnInHome).dataset.possition;
+        console.log(positionOfPawn);
+        if (positionOfPawn == "home") {
+          counter++;
+        }
+        else {
+          break;
+        }
+      }
+      if (counter == 4) {
+        return 0;
+      }
+      else {
+        return 1;
+      }
     }
 
     function rollDice()
     {
-      if (numberOfRolls > 0 && playerOnTurn == iamPlayer) {
+      console.log(numberOfRolls);
+      console.log(turn);
+      console.log(iamPlayer);
+
+      if (numberOfRolls > 0 && turn == iamPlayer) {
+        if (isAllPawnsOnStart() == 0 && playerOnTurnRolls <= 3) {
+          playerOnTurnRolls++;
+          numberOfRolls++;
+        }
         numberOfRolls--;
         var rollNum=Math.floor(Math.random()*6+1);
         globalNum=rollNum;
@@ -134,10 +168,26 @@ function generateGameboard()
         if (rollNum == 6) {
           numberOfRolls++;
         }
-        document.getElementById("dice").setAttribute("src", "/client/img/img"+rollNum+".png");
+        else {
+
+        }
+        var diceSource = "/client/img/img"+rollNum+".png";
+        document.getElementById("diceIMG").setAttribute("src", diceSource);
       }
       else {
       }
+    }
+
+    function isPawnsOnStart(testedPawnID)
+    {
+      var positionOfPawn = "home";
+      positionOfPawn = document.getElementById(testedPawnID).dataset.possition;
+        if (positionOfPawn == "home") {
+          return 0;
+        }
+        else {
+          return 1;
+        }
     }
 
     function checkMove()
@@ -145,7 +195,15 @@ function generateGameboard()
       var count=0;
       if(this.id.includes(playerOnTurn)  && turn == iamPlayer)
       {
+        if (isPawnsOnStart(this.id) {
+          moveFromHome(this,this.id);
+        }
+        else {
 
+        }
+      }
+      else {
+        return;
       }
 
 
@@ -181,12 +239,6 @@ function moveOnBoard(pawn, pawnID, rollValue) {
   var finalPosition = parseInt(pawn.parentNode.id) + parseInt(rollValue);
   if (finalPosition > 40) {
     finalPosition = finalPosition - 40;
-  }
-  if (finalPosition < 10) {
-    finalPosition = finalPosition + "  ";
-  }
-  else {
-    finalPosition = finalPosition + " ";
   }
 
  // adding to movecounter
@@ -271,6 +323,11 @@ else{
           playerOnTurn = "green";
         }
         console.log('turn:', turn);
+        playerOnTurnRolls = 0;
+        numberOfRolls = 1;
+        if (numberOfPlayers < turn) {
+          onTurn();
+        }
     }
 
     function kickPawn()
