@@ -282,7 +282,8 @@ function generateGameboard()
     
     }
 
-function moveOnBoard(pawn, pawnID, rollValue) {
+function moveOnBoard(pawn, pawnID, rollValue)
+{
 
     var splitPawnId = pawn.id.split("-");
     // console.log(splitPawnId[0]);
@@ -342,15 +343,26 @@ else{
     var finalField = document.getElementById(finalPosition); 
     if(finalField.dataset.ocupiedby != "none" )
     {
-    console.log('niekto tam je');
+        if(finalField.dataset.ocupiedby.includes(playerOnTurn))
+        {
+        return 1;
+        }
+        else
+        {
+        pawn.parentNode.dataset.ocupiedby='none';
+        
+        finalField.innerHTML="";
+        finalField.appendChild(pawn);
+        pawn.parentNode.dataset.ocupiedby=pawnID;
+        }
     }
     else
     {
-    console.log("nikto tam nie je");
-    }
     pawn.parentNode.dataset.ocupiedby='none';
     document.getElementById(finalPosition).appendChild(pawn);
     pawn.parentNode.dataset.ocupiedby=pawnID;
+    }
+    
     console.log(pawn,homeField);
     if(globalNum!=6)
         {
@@ -358,10 +370,10 @@ else{
         onTurn();
         }
     else
-    {
-    globalNum=0;
+        {
+        globalNum=0;
+        }
     }
-}
  
 }
 
