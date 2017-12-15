@@ -5,9 +5,6 @@ var playerMoved = true;
 
 function generateGameboard()
 {
-    var board='url(img/board.png)';
-    document.getElementById('content').style.backgroundImage=board;
-    document.getElementById('content').style.boxShadow='13px 13px 27px 7px rgba(0,0,0,0.75)';
     var gameboardClass = [
                            ["redpawn", "redpawn", "none", "none", "other", "other", "blue", "none", "none", "bluepawn", "bluepawn"],
                            ["redpawn", "redpawn", "none", "none", "other", "blue", "other", "none", "none", "bluepawn", "bluepawn"],
