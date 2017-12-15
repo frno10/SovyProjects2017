@@ -72,8 +72,8 @@ function generateGameboard()
          if (data != "avl") {
 
          }
-         myBlock.setAttribute('data', "availity: 'yes'");
-		 myBlock.setAttribute('data',"ocupiedBy: 'none'");
+    
+		 myBlock.setAttribute('data-ocupiedBy', "none");
        }
        if (classname == "blu") {
          classname = "blue";
@@ -173,6 +173,7 @@ function generateGameboard()
     document.getElementById("dice").innerHTML="";
     var dice=document.createElement("img");
     dice.setAttribute("src", "img/roll.png");
+    dice.style.cursor="pointer";
     dice.addEventListener("click", rollDice);
     document.getElementById("dice").appendChild(dice);
     }
@@ -183,6 +184,7 @@ function generateGameboard()
             return 0;
         }
     var dice=document.createElement("img");
+    dice.style.cursor="pointer";
     var rollNum=Math.floor(Math.random()*6+1);
     globalNum=rollNum;
     console.log(rollNum);
@@ -288,7 +290,7 @@ function moveOnBoard(pawn, pawnID, rollValue) {
     var splitPawnId = pawn.id.split("-");
     // console.log(splitPawnId[0]);
 
-  console.log(pawn);
+  //console.log(pawn);
     if(globalNum == 0){
         return 1;
     }
@@ -339,7 +341,19 @@ else if(pawn.dataset.movecounter > 44){
 }
 
 else{
+    
+    var finalField = document.getElementById(finalPosition); 
+    if(finalField.dataset.ocupiedby != "none" )
+    {
+    console.log('niekto tam je');
+    }
+    else
+    {
+    console.log("nikto tam nie je");
+    }
+    pawn.parentNode.dataset.ocupiedby='none';
     document.getElementById(finalPosition).appendChild(pawn);
+    pawn.parentNode.dataset.ocupiedby=pawnID;
     console.log(pawn,homeField);
     if(globalNum!=6)
         {
@@ -350,7 +364,6 @@ else{
     {
     globalNum=0;
     }
-   
 }
  
 }
@@ -358,27 +371,35 @@ else{
     function moveFromHome(fig,figure)
     {
         // console.log('rolled'+globalNum);
-        if((parseInt(globalNum)==6)&&(parseInt(turn)==1)&&(figure.includes("yellow")))
+        if(globalNum==6 && turn==1 && figure.includes("yellow"))
         {
-        document.getElementById("31 ").appendChild(fig);
+        var firstField =  document.getElementById("31 ");  
+        firstField.appendChild(fig);
+        firstField.dataset.ocupiedby = figure;
         globalNum=0;
         }
 
-        if((parseInt(globalNum)==6)&&(parseInt(turn)==2)&&(figure.includes("red")))
-        {
-        document.getElementById("1  ").appendChild(fig);
+        if(globalNum==6 && turn==2 && figure.includes("red"))
+        { 
+        var firstField =  document.getElementById("1  "); 
+        firstField.appendChild(fig);
+        firstField.dataset.ocupiedby = figure;
         globalNum=0;
         }
 
-        if((parseInt(globalNum)==6)&&(parseInt(turn)==3)&&(figure.includes("blue")))
-        {
-        document.getElementById("11 ").appendChild(fig);
+        if(globalNum==6 && turn==3 && figure.includes("blue"))
+        {   
+        var firstField =  document.getElementById("11 "); 
+        firstField.appendChild(fig);
+        firstField.dataset.ocupiedby = figure;
         globalNum=0;
         }
 
-        if((parseInt(globalNum)==6)&&(parseInt(turn)==4)&&(figure.includes("green")))
+        if(globalNum==6 && turn==4 && figure.includes("green"))
         {
-        document.getElementById("21 ").appendChild(fig);
+        var firstField =  document.getElementById("21 "); 
+        firstField.appendChild(fig);
+        firstField.dataset.ocupiedby = figure;
         globalNum=0;
         }
         
@@ -416,21 +437,20 @@ else{
                 var circle=document.createElement("img");
                 circle.setAttribute("src", "img/turn.png");
                 document.getElementById("onturn2").appendChild(circle);
-        }else if(turn==3){
+        }
+        else if(turn==3){
                 document.getElementById("onturn2").innerHTML="";
                 var circle=document.createElement("img");
                 circle.setAttribute("src", "img/turn.png");
                 document.getElementById("onturn3").appendChild(circle);
 
-        }else{
+        }
+        else{
                 document.getElementById("onturn3").innerHTML="";
                 var circle=document.createElement("img");
                 circle.setAttribute("src", "img/turn.png");
                 document.getElementById("onturn4").appendChild(circle);
-
         }
-            
-        console.log('turn:', turn);
     }
 
     function kickPawn()
