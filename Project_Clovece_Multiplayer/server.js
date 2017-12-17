@@ -31,8 +31,25 @@ io.sockets.on('connection', function(socket){
         socket.broadcast.emit('serverWhatIsYourGame',data);
     });
 
+    socket.on('myGameIs',function(data){
+        socket.broadcast.emit('serverGamesAre',data);
+    });
+
     socket.on('nextPlayer',function(data){
+      //console.log(data);
         socket.broadcast.emit('serverPlayerOnTurn',data);
+    });
+
+    socket.on('movePawn',function(data){
+        socket.broadcast.emit('serverMovePawn',data);
+    });
+
+    socket.on('moveToHome',function(data){
+        socket.broadcast.emit('serverMoveToHome',data);
+    });
+
+    socket.on('movePawnFromHome',function(data){
+        socket.broadcast.emit('serverMovePawnFromHome',data);
     });
 
 });

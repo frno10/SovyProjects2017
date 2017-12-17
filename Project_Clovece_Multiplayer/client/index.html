@@ -26,8 +26,9 @@
     </div>
      <div id="login" style="width: 600px; height: 400px; background: silver; border-radius: 30px;">
         <div id="name">
-          <form action="newPlayerLogin()">
+
           <table>
+            <form action="newPlayerLogin()">
             <tr>
               <td><label for="">Your Name</label></td>
               <td><input id="myName" class = "inputField" type="text" placeholder="Type in your username"></td>
@@ -36,19 +37,18 @@
               <td><label for="">Game Name</label></td>
               <td><input id="myGame" class = "inputField" type="text" placeholder="Type Name of the Game"></td>
             </tr>
+            </form>
             <tr>
               <td><button class="btn btn-lg btn-dark" onclick="newPlayerLogin()">Start Game</button></td>
-              <td><button class="btn btn-lg btn-dark" onclick="">Active Games</button></td>
+              <td><button class="btn btn-lg btn-dark" onclick="echoGames()">Active Games</button></td>
             </tr>
           </table>
-         </form>
+
           <textarea name="Games" id="listOfGames" rows="10" cols="64" style="margin: 30px;" readonly></textarea>
          </div>
      </div>
   </div>
   </div>
-
-
             <script src="/client/script/preloader.js"></script>
             <script src="/client/script/gameLogic.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
@@ -60,6 +60,7 @@
               var numberOfPlayers = 1;
               var playersInGame = [];
               var activeGames = [];
+              var activePlayers = [];
               var loginMenu = 1;
 
               //WEB SOCKETS
@@ -97,6 +98,15 @@
                 });
               }
 
+              function echoGames(){
+                socket.emit('whatGamesAreActive',{
+                    sourceID: myID,
+                    game: myGame,
+                    players: numberOfPlayers
+
+                });
+              }
+
               socket.on('serverNextPlayer',function(data){
                 if (data.sourceID != myID && data.game == myGame) {
                   playerOnTurn = data.playerColor;
@@ -129,6 +139,13 @@
                           iam: myName,
                           playerNumber: swap
                       });
+                      if (swap != "spectator") {
+                        //swap = "name"+swap;
+                        //console.log("1");
+                        //document.getElementById(swap).innerHTML = data.name;
+                      }
+                      else {
+                      }
                     }
                     else {
                     }
@@ -139,46 +156,141 @@
 
               socket.on('serverYouArePlayer',function(data){
                   //console.log(data.msg);
+                  var swap = "";
                   if (data.game == myGame) {
                     if (data.sourceID != myID && data.destinationID == myID) {
                       //console.log(data.playerNumber);
                       if (data.playerNumber > iamPlayer ) {
                         iamPlayer = data.playerNumber;
+
                         document.getElementById("numerofp").innerHTML = "Iam player: " + iamPlayer;
+                          //swap = "name"+data.imPlayer;
+                          //console.log("2");
+                          //document.getElementById(swap).innerHTML = data.iam;
                       }
-                      else if (data.playerNumber == "spectator") {
+                      if (data.playerNumber == "spectator") {
                         iamPlayer = "spectator";
+
                         document.getElementById("numerofp").innerHTML = "Iam: " + iamPlayer;
+                        //swap = "name"+data.imPlayer;
+                        //console.log("3");
+                        //document.getElementById(swap).innerHTML = data.iam;
                       }
                     }
                   }
-
                   if (data.playerNumber > numberOfPlayers || data.playerNumber == "spectator") {
-                    numberOfPlayers = data.playerNumber;
+                   numberOfPlayers = data.playerNumber;
+                  }
+              });
+
+              function echoMovePawn(pawn, pawnID, rollValue){
+                socket.emit('movePawn',{
+                    sourceID: myID,
+                    game: myGame,
+                    pawn: pawn,
+                    pawnID: pawnID,
+                    rollValue: rollValue
+                });
+              }
+
+
+              function echoMovePawnFromHome(fig, figure){
+                socket.emit('movePawnFromHome',{
+                  sourceID: myID,
+                  game: myGame,
+                  fig: fig,
+                  figure: figure
+                });
+              }
+
+              function echoMoveToHome(pawn, splitPawnId, finalPosition){
+                socket.emit('moveToHome',{
+                    sourceID: myID,
+                    game: myGame,
+                    pawn: pawn,
+                    splitPawnId: splitPawnId,
+                    finalPosition: finalPosition
+                });
+              }
+
+              socket.on('serverMovePawn',function(data){
+                  if (data.game == myGame) {
+                    serverMoveOnBoard(data.pawn, data.pawnID, data.rollValue);
+                  }
+              });
+
+              socket.on('serverMovePawnFromHome',function(data){
+                  if (data.game == myGame) {
+                    serverMoveFromHome(data.fig, data.figure);
+                  }
+              });
+
+              socket.on('serverMoveToHome',function(data){
+                  if (data.game == myGame) {
+                    serverMoveToHome(data.pawn, data.splitPawnId, data.finalPosition);
+                  }
+              });
+
+
+
+              socket.on('serverWhatIsYourGame',function(data){
+                if (iamPlayer != "spectator") {
+                  socket.emit('myGameIs',{
+                      game: myGame,
+                      sourceID: data.sourceID,
+                      players: numberOfPlayers
+                  });
+                }
+              });
+
+              socket.on('serverGamesAre',function(data){
+                //console.log(data);
+                //console.log(activeGames.length);
+                  if (loginMenu == 1) {
+                    //console.log("Begin");
+                    var found = 0;
+                    for (var i = 0; i < activeGames.length; i++) {
+                      if (activeGames[i] == data.game || data.game == "") {
+                        //console.log("END");
+                        return;
+                      }
+                      activeGames[activeGames.length] = data.game;
+                      activePlayers[activePlayers.length] = data.players;
+                      var swap = document.getElementById("listOfGames").value;
+                      swap = "Game: "+data.game+"  Players in game: "+data.players+"\n";
+                      //console.log("swap", swap);
+                      document.getElementById("listOfGames").value = swap;
+                    }
                   }
               });
 
               socket.on('serverPlayerOnTurn',function(data){
-                  if (data.game == myGame) {
-
-                  }
-              });
-
-              socket.on('serverWhatIsYourGame',function(data){
-                if (iamPlayer != "spectator") {
-
-                }
-              });
-              socket.on('serverActiveGames',function(data){
-                  if (loginMenu == 1) {
-
-                  }
-              });
-
-              socket.on('serverMovePawn',function(data){
                 if (data.sourceID != myID && data.game == myGame) {
                   playerOnTurn = data.playerColor;
                   turn = data.turn;
+                  reGenerateDice();
+                  if(turn==1)
+                      {
+                        circle = document.getElementById("activePlayer");
+                      document.getElementById("onturn4").innerHTML="";
+                      document.getElementById("onturn1").appendChild(circle);
+                      }
+                  else if(turn==2){
+                    circle = document.getElementById("activePlayer");
+                          document.getElementById("onturn1").innerHTML="";
+                          document.getElementById("onturn2").appendChild(circle);
+                  }
+                  else if(turn==3){
+                    circle = document.getElementById("activePlayer");
+                          document.getElementById("onturn2").innerHTML="";
+                          document.getElementById("onturn3").appendChild(circle);
+
+                  }
+                  else{
+                    circle = document.getElementById("activePlayer");
+                          document.getElementById("onturn3").innerHTML="";
+                          document.getElementById("onturn4").appendChild(circle);
+                  }
                 }
               });
 

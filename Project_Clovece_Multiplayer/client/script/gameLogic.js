@@ -233,10 +233,12 @@ function generateGameboard()
         var splitted=document.getElementById(playerOnTurn + '-Start-' + idFigure[2]);
         if(this.parentNode == splitted)
         {
+
         moveFromHome(this,this.id);
         }
         else if(idFigure[0] == playerOnTurn)
         {
+
         moveOnBoard(this, this.id, globalNum);
         }
     }
@@ -258,7 +260,7 @@ function generateGameboard()
         if(pawn.dataset.movecounter > 44){
 
             pawn.dataset.movecounter -= rollValue;
-            console.log('cant move further');
+            //console.log('cant move further');
             return false;
             if(globalNum!=6){
                 globalNum=0;
@@ -281,7 +283,7 @@ function generateGameboard()
             var moveCounter = parseInt(currentPawn.dataset.movecounter);
 
             currentPawn.dataset.movecounter = moveCounter + rollValue;
-            console.log(currentPawn);
+            //console.log(currentPawn);
 
             if(currentPawn.dataset.movecounter > 44 || currentPawn.parentNode == currentStarter){;
                 if(rollValue != 6){
@@ -301,6 +303,7 @@ function generateGameboard()
     }
 
     function moveToHome(pawn, splitPawnId,finalPosition){
+        echoMoveToHome(pawn, splitPawnId, finalPosition);
         var homeNumber = pawn.dataset.movecounter - 40;
         var homeField = document.getElementById(splitPawnId[0] + '-Home-' + homeNumber);
         if(homeField.dataset.ocupiedby == "none"){
@@ -319,32 +322,13 @@ function generateGameboard()
         }
         else{
             pawn.dataset.movecounter -= globalNum;
-
         }
-
     }
 
-    function checkMove()
-    {
-        playerMoved = true;
-        console.log('rolled'+globalNum)
-        var idFigure = this.id.split("-");
-        // console.log(idFigure,playerOnTurn,turn);
-        var splitted=document.getElementById(playerOnTurn + '-Start-' + idFigure[2]);
-        // console.log(idFigure,this.parentNode,splitted);
-        if(this.parentNode == splitted)
-        {
-        moveFromHome(this,this.id);
-        }
-        else if(idFigure[0] == playerOnTurn)
-        {
-        moveOnBoard(this, this.id, globalNum);
-        }
-
-    }
 
     function moveOnBoard(pawn, pawnID, rollValue)
     {
+        echoMovePawn(pawn, pawnID, rollValue);
         var splitPawnId = pawn.id.split("-");
         var finalPosition = parseInt(pawn.parentNode.id) + parseInt(rollValue);
 
@@ -398,6 +382,7 @@ function generateGameboard()
 
 function moveFromHome(fig,figure)
 {
+  echoMovePawnFromHome(fig, figure);
     if(globalNum == 6){
         var startingField = document.getElementById(fig.dataset.startfield);
         if(startingField.dataset.ocupiedby != "none"){
@@ -478,7 +463,102 @@ function moveFromHome(fig,figure)
         console.log(kickedPlayer, parsedKicked, kickedHome, finalField);
 }
 
-  function serverMoveFigure(data) {
+function serverMoveOnBoard(pawn, pawnID, rollValue)
+{
+    var splitPawnId = pawn.id.split("-");
+    var finalPosition = parseInt(pawn.parentNode.id) + parseInt(rollValue);
 
+    if(globalNum == 0){
+        return 1;
+    }
+    if (finalPosition > 40) {
+      finalPosition = finalPosition - 40;
+    }
+    var finalField = document.getElementById(finalPosition);
 
+   var moveCounter = parseInt(pawn.dataset.movecounter);
+   pawn.dataset.movecounter = moveCounter + rollValue;
+
+   if(canMoveFurther(pawn,rollValue) == true){
+      if(pawn.dataset.movecounter > 40 && pawn.dataset.movecounter < 45){
+          serverMoveToHome(pawn, splitPawnId,finalPosition);
+      }
+      else if(finalField.dataset.ocupiedby == "none"){
+          pawn.parentNode.dataset.ocupiedby='none';
+          finalField.appendChild(pawn);
+          pawn.parentNode.dataset.ocupiedby=pawnID;
+          if(globalNum!=6){
+              globalNum=0;
+              diceImg.setAttribute("src", "/client/img/roll.png");
+              //onTurn();
+          }
+          else{
+              globalNum=0;
+          }
+      }
+      else if(finalField.dataset.ocupiedby.includes(playerOnTurn)){
+          //console.log('your own player');
+          pawn.dataset.movecounter -= rollValue;
+          return 0;
+      }
+      else{
+          kickPawn(pawn,finalField);
+          if(globalNum!=6){
+              globalNum=0;
+              //onTurn();
+          }
+          else{
+              globalNum=0;
+          }
+      }
+
+   }
+
+  }
+
+  function serverMoveFromHome(fig,figure)
+  {
+      if(globalNum == 6){
+          var startingField = document.getElementById(fig.dataset.startfield);
+          if(startingField.dataset.ocupiedby != "none"){
+              if(startingField.dataset.ocupiedby.includes(playerOnTurn))
+              return 0;
+
+              else {
+                  kickPawn(fig,startingField);
+                  if(globalNum!=6){
+                      globalNum=0;
+                      //onTurn();
+                  }
+                  else{
+                      globalNum=0;
+                  }
+              }
+          }
+          else{
+              startingField.appendChild(fig);
+              startingField.dataset.ocupiedby = fig.id;
+          }
+      }
+  }
+
+  function serverMoveToHome(pawn, splitPawnId,finalPosition){
+      var homeNumber = pawn.dataset.movecounter - 40;
+      var homeField = document.getElementById(splitPawnId[0] + '-Home-' + homeNumber);
+      if(homeField.dataset.ocupiedby == "none"){
+          pawn.parentNode.dataset.ocupiedby='none';
+          homeField.appendChild(pawn);
+          pawn.parentNode.dataset.ocupiedby=pawn.id;
+
+          if(globalNum!=6){
+              globalNum=0;
+              //onTurn();
+          }
+          else{
+              globalNum=0;
+          }
+      }
+      else{
+          pawn.dataset.movecounter -= globalNum;
+      }
   }
