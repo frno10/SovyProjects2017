@@ -3,6 +3,7 @@ var turn=1;
 var playerOnTurn = "yellow";
 var playerMoved = true;
 var diceImg;
+var myMusic;
 var circle=document.createElement("img");
 circle.setAttribute("src", "img/turn.png");
 
@@ -147,7 +148,8 @@ function generateGameboard()
     var rollNum = Math.floor(Math.random()*6+1);
     globalNum = rollNum;
     console.log(rollNum);
-
+    myMusic = new sound("sounds/dice.mp3");
+    myMusic.play();
     document.getElementById("dice").innerHTML="";
     dice.setAttribute("src", "img/img" + rollNum + ".png");
 	document.getElementById("dice").appendChild(dice);
@@ -302,9 +304,11 @@ function moveOnBoard(pawn, pawnID, rollValue)
     function moveFromHome(fig,figure)
     {
         if(globalNum == 6){
+
             var startingField = document.getElementById(fig.dataset.startfield);
             if(startingField.dataset.ocupiedby != "none"){
                 if(startingField.dataset.ocupiedby.includes(playerOnTurn))
+                    
                 return 0;
 
                 else {
@@ -337,22 +341,30 @@ function moveOnBoard(pawn, pawnID, rollValue)
         if (turn == 1) {
         playerOnTurn = "yellow";
         document.getElementById("onturn1").appendChild(circle); 
+        myMusic = new sound("sounds/mario.mp3");
+            myMusic.play();
         }
 
         else if (turn == 2) {
         playerOnTurn = "red";
         document.getElementById("onturn1").innerHTML = "";
         document.getElementById("onturn2").appendChild(circle);
+            myMusic = new sound("sounds/mario.mp3");
+            myMusic.play();
         }
 
         else if (turn == 3) {
         playerOnTurn = "blue";
         document.getElementById("onturn3").appendChild(circle);
+            myMusic = new sound("sounds/mario.mp3");
+            myMusic.play();
         }
 
         else {
         playerOnTurn = "green";
         document.getElementById("onturn4").appendChild(circle);
+            myMusic = new sound("sounds/mario.mp3");
+            myMusic.play();
         }
         
         console.log('turn:', turn);
@@ -371,3 +383,18 @@ function moveOnBoard(pawn, pawnID, rollValue)
         pawn.parentNode.dataset.ocupiedby=pawn.id;
         console.log(kickedPlayer, parsedKicked, kickedHome, finalField);
     }
+
+function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function(){
+        this.sound.play();
+    }
+    this.stop = function(){
+        this.sound.pause();
+    }
+}
