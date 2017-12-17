@@ -186,8 +186,7 @@ function generateGameboard()
     }
 
     function checkMove()
-    {
-        playerMoved = true;
+    {  
         console.log('rolled'+globalNum)
         var idFigure = this.id.split("-");
         var splitted=document.getElementById(playerOnTurn + '-Start-' + idFigure[2]);
@@ -202,14 +201,13 @@ function generateGameboard()
     
     }
 
-
     function canMoveFurther(pawn,rollValue){
 
         if(pawn.dataset.movecounter > 44){
 
             pawn.dataset.movecounter -= rollValue;
             console.log('cant move further');
-            return false;
+            
             if(globalNum!=6){
                 globalNum=0;
                 onTurn();
@@ -217,6 +215,7 @@ function generateGameboard()
             else{
                 globalNum=0;
             }
+            return false;
         
          }
          else
@@ -248,7 +247,7 @@ function generateGameboard()
     }
 function moveOnBoard(pawn, pawnID, rollValue)
 {
-
+    playerMoved = true;
     var splitPawnId = pawn.id.split("-");
     var finalPosition = parseInt(pawn.parentNode.id) + parseInt(rollValue);
     
@@ -284,6 +283,8 @@ function moveOnBoard(pawn, pawnID, rollValue)
     else if(finalField.dataset.ocupiedby.includes(playerOnTurn)){
         console.log('your own player');
         pawn.dataset.movecounter -= rollValue;
+        playerMoved = false;
+        globalNum=0;
         return 0;
     }
     else{
@@ -304,6 +305,7 @@ function moveOnBoard(pawn, pawnID, rollValue)
     function moveFromHome(fig,figure)
     {
         if(globalNum == 6){
+            playerMoved = true;
 
             var startingField = document.getElementById(fig.dataset.startfield);
             if(startingField.dataset.ocupiedby != "none"){
@@ -326,6 +328,7 @@ function moveOnBoard(pawn, pawnID, rollValue)
             else{
                 startingField.appendChild(fig);
                 startingField.dataset.ocupiedby = fig.id;
+                globalNum=0;
             }
         }
             
