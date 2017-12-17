@@ -221,6 +221,7 @@
 
               socket.on('serverMovePawnFromHome',function(data){
                   if (data.game == myGame) {
+                    var swapFig = data.fig;
                     serverMoveFromHome(data.fig, data.figure);
                   }
               });

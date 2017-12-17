@@ -233,12 +233,12 @@ function generateGameboard()
         var splitted=document.getElementById(playerOnTurn + '-Start-' + idFigure[2]);
         if(this.parentNode == splitted)
         {
-
+          console.log("this.parentNode == splitted");
         moveFromHome(this,this.id);
         }
         else if(idFigure[0] == playerOnTurn)
         {
-
+          console.log("idFigure[0] == playerOnTurn");
         moveOnBoard(this, this.id, globalNum);
         }
     }
@@ -275,7 +275,7 @@ function generateGameboard()
             return true;
     }
 
-    function isMovePossible(rollValue){
+    function isMovePossible2(rollValue){
         var found = 0;
         for(i=1;i<5;i++){
             var currentPawn = document.getElementById(playerOnTurn + '-pawn-' + i);
@@ -302,8 +302,9 @@ function generateGameboard()
 
     }
 
-    function moveToHome(pawn, splitPawnId,finalPosition){
-        echoMoveToHome(pawn, splitPawnId, finalPosition);
+    function moveToHome(pawn, splitPawnId,finalPosition, idToGet){
+
+        echoMoveToHome(pawn.id, splitPawnId, finalPosition);
         var homeNumber = pawn.dataset.movecounter - 40;
         var homeField = document.getElementById(splitPawnId[0] + '-Home-' + homeNumber);
         if(homeField.dataset.ocupiedby == "none"){
@@ -328,7 +329,7 @@ function generateGameboard()
 
     function moveOnBoard(pawn, pawnID, rollValue)
     {
-        echoMovePawn(pawn, pawnID, rollValue);
+        echoMovePawn(pawn.id, pawnID, rollValue);
         var splitPawnId = pawn.id.split("-");
         var finalPosition = parseInt(pawn.parentNode.id) + parseInt(rollValue);
 
@@ -465,6 +466,10 @@ function moveFromHome(fig,figure)
 
 function serverMoveOnBoard(pawn, pawnID, rollValue)
 {
+  pawn = document.getElementById(pawn);
+  console.log(pawn);
+  console.log(pawnID);
+  console.log(rollValue);
     var splitPawnId = pawn.id.split("-");
     var finalPosition = parseInt(pawn.parentNode.id) + parseInt(rollValue);
 
@@ -479,7 +484,7 @@ function serverMoveOnBoard(pawn, pawnID, rollValue)
    var moveCounter = parseInt(pawn.dataset.movecounter);
    pawn.dataset.movecounter = moveCounter + rollValue;
 
-   if(canMoveFurther(pawn,rollValue) == true){
+   if(canMoveFurther2(pawn,rollValue) == true){
       if(pawn.dataset.movecounter > 40 && pawn.dataset.movecounter < 45){
           serverMoveToHome(pawn, splitPawnId,finalPosition);
       }
@@ -518,7 +523,9 @@ function serverMoveOnBoard(pawn, pawnID, rollValue)
 
   function serverMoveFromHome(fig,figure)
   {
-      if(globalNum == 6){
+
+    console.log(fig);
+    console.log(figure);
           var startingField = document.getElementById(fig.dataset.startfield);
           if(startingField.dataset.ocupiedby != "none"){
               if(startingField.dataset.ocupiedby.includes(playerOnTurn))
@@ -539,10 +546,14 @@ function serverMoveOnBoard(pawn, pawnID, rollValue)
               startingField.appendChild(fig);
               startingField.dataset.ocupiedby = fig.id;
           }
-      }
+
   }
 
   function serverMoveToHome(pawn, splitPawnId,finalPosition){
+    pawn = document.getElementById(pawn);
+    console.log(pawn);
+    console.log(splitPawnId);
+    console.log(finalPosition);
       var homeNumber = pawn.dataset.movecounter - 40;
       var homeField = document.getElementById(splitPawnId[0] + '-Home-' + homeNumber);
       if(homeField.dataset.ocupiedby == "none"){
@@ -561,4 +572,25 @@ function serverMoveOnBoard(pawn, pawnID, rollValue)
       else{
           pawn.dataset.movecounter -= globalNum;
       }
+  }
+
+  function canMoveFurther2(pawn,rollValue){
+
+      if(pawn.dataset.movecounter > 44){
+
+          pawn.dataset.movecounter -= rollValue;
+          //console.log('cant move further');
+
+          if(globalNum!=6){
+              globalNum=0;
+              return false;
+          }
+          else{
+              globalNum=0;
+              return false;
+          }
+
+       }
+       else
+          return true;
   }
