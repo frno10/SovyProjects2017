@@ -40,6 +40,11 @@ io.sockets.on('connection', function(socket){
         socket.broadcast.emit('serverPlayerOnTurn',data);
     });
 
+    socket.on('gameState',function(data){
+        socket.broadcast.emit('serverGameState',data);
+    });
+
+/*
     socket.on('movePawn',function(data){
         socket.broadcast.emit('serverMovePawn',data);
     });
@@ -51,5 +56,7 @@ io.sockets.on('connection', function(socket){
     socket.on('movePawnFromHome',function(data){
         socket.broadcast.emit('serverMovePawnFromHome',data);
     });
+*/
+
 
 });
