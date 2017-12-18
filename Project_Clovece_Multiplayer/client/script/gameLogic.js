@@ -8,8 +8,8 @@ var diceImg;
 var circle=document.createElement("img");
 circle.setAttribute("src", "/client/img/turn.png");
 
-var gameStatePositions = [];
-var gameStateCounters = [];
+var gameStatePositions = "";
+var gameStateCounters = "";
 
 function generateGameboard()
 {
@@ -426,7 +426,7 @@ function moveFromHome(fig,figure)
 
 }
 
-    function onTurn()
+    function onTurn(data)
     {
         if(turn==4)
         {
@@ -439,9 +439,12 @@ function moveFromHome(fig,figure)
         reGenerateDice();
         document.getElementById("dice").src = "/client/img/roll.png";
         console.log("regenDICE");
+        if (data != 1) {
+          updateGameState();
+        }
         echoNextPlayer();
         if (numberOfPlayers < turn) {
-          onTurn();
+          onTurn('1');
         }
 
         if(turn==1)
@@ -616,16 +619,49 @@ function serverMoveOnBoard(pawn, pawnID, rollValue)
   }
 
   function updateGameState() {
-    var color = ['red', 'green', 'blue', 'yellow'];
+    var color = ['yellow','red', 'blue', 'green'];
     var swapID = "";
-    gameStateCounters = [];
-    gameStatePositions = [];
+    var swapPostitions = "start";
+    var swapCounters = "start";
+    gameStateCounters = "";
+    gameStatePositions = "";
     for (var i = 0; i < 4; i++) {
-      for (var j = 0; j <= 4; j++) {
+      for (var j = 1; j <= 4; j++) {
         swapID = color[i]+"-pawn-"+j;
-        gameStatePositions[gameStatePositions.length] = document.getElementById(swapID).parentNode.id;
-        gameStateCounters[gameStateCounters.length] = document.getElementById(swapID).dataset.movecounter;
+        swapPostitions = document.getElementById(swapID).parentNode.id;
+        swapCounters = document.getElementById(swapID).dataset.movecounter;
+        gameStatePositions = gameStatePositions + "/" + swapPostitions;
+        gameStateCounters = gameStateCounters + "/" + swapCounters;
       }
     }
-    echoGameState(positions, moveCounters);
+    echoGameState(gameStatePositions, gameStateCounters);
+  }
+
+  function serverUpdateGame(positions, counters){
+    var swapPostitions = positions.split("/");
+    var swapCounters = counters.split("/");
+    var color = ['yellow','red', 'blue', 'green'];
+    var swapID = "";
+    var swapFigure = "";
+    var count = 1;
+
+    for (var i = 1; i <= 40; i++) {
+      document.getElementById(i).dataset.ocupiedby = "none";
+    }
+
+    for (var i = 0; i < 4; i++) {
+      for (var j = 1; j <= 4; j++) {
+        swapID = color[i]+"-pawn-"+j;
+        swapFigure = document.getElementById(swapID);
+        swapFigure.dataset.movecounter = swapCounters[count];
+        if (swapPostitions[count].includes("home")) {
+
+        }
+        else {
+            document.getElementById(swapPostitions[count]).dataset.ocupiedby = swapID;
+        }
+        document.getElementById(swapPostitions[count]).appendChild(swapFigure);
+        count++;
+      }
+    }
   }
