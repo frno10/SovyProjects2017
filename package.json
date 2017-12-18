@@ -1,7 +1,10 @@
 {
-  "name": "Clovece-Multiplayer",
-  "version": "1.0.0",
+  "name": "CloveceMultiplayer",
   "description": "",
+  "version": "1.0.0",
+  "engines": {
+    "node": "8.9.3"
+  },
   "main": "Project_Clovece_Multiplayer/server.js",
   "scripts": {
     "start": "node Project_Clovece_Multiplayer/server.js",
