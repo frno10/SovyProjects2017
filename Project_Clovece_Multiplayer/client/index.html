@@ -7,9 +7,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="/client/script/gameLogic.js"></script>
-    <link rel="stylesheet" href="/client/css/style.css">
     <title>Project Clovece</title>
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
   <div id="numerofp">
@@ -24,32 +23,32 @@
 
         </div>
     </div>
-     <div id="login" style="width: 600px; height: 400px; background: silver; border-radius: 30px;">
+     <div id="login">
         <div id="name">
 
           <table>
             <form action="newPlayerLogin();">
-            <tr>
-              <td><label for="">Your Name</label></td>
-              <td><input id="myName" class = "inputField" type="text" placeholder="Type in your username"></td>
-            </tr>
-            <tr>
-              <td><label for="">Game Name</label></td>
-              <td><input id="myGame" class = "inputField" type="text" placeholder="Type Name of the Game"></td>
-            </tr>
-            </form>
-            <tr>
-              <td><button class="btn btn-lg btn-dark" onclick="newPlayerLogin();">Start Game</button></td>
-              <td><button class="btn btn-lg btn-dark" onclick="echoGames()">Active Games</button></td>
-            </tr>
-          </table>
+            
+              <label for="">Your Name</label>
+              <input id="myName" class = "inputField" type="text" placeholder="Type in your username">
+              <div id="errorFirst"></div>
+            
+            
+              <label for="">Game Name</label>
+              <input id="myGame" class = "inputField" type="text" placeholder="Type Name of the Game">
+                <div id="errorSecond"></div>
 
-          <textarea name="Games" id="listOfGames" rows="10" cols="64" style="margin: 30px;" readonly></textarea>
+            </form>
+        
+          </table>
+          
+         <button class="btn btn-lg btn-dark" onclick="inputOperation()" onclick="newPlayerLogin();">Start Game</button>
+          
          </div>
      </div>
   </div>
   </div>
-
+            <script src="script/preloader.js"></script>
             <script src="/client/script/gameLogic.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
             <script type="text/javascript">

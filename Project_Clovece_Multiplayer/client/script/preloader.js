@@ -11,8 +11,8 @@ document.body.onload=function(){
 }
 
 function inputOperation(){
-        var firstNum = document.getElementById('first');
-        var secondNum = document.getElementById('second');
+        var firstNum = document.getElementById('myName');
+        var secondNum = document.getElementById('myGame');
         var error=0;
         if(firstNum.value=='')
         {

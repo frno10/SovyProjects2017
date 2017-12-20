@@ -42,12 +42,12 @@ input
     padding-left: 30px;
 }
 
-#first
+#myName
 {
     margin-left: 15px;
 }
 
-#second
+#myGame
 {
     margin-left: 3px;
 }
@@ -89,14 +89,14 @@ label
 
 #errorFirst{
     font-family: sans-serif;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 500;
     color: red;
     height: 20px
 }
 #errorSecond{
     font-family: sans-serif;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 500;
     color: red;
     height: 20px;
