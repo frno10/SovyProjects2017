@@ -145,6 +145,7 @@ function generateGameboard()
 
     var dice = document.createElement("img");
     diceImg = dice;
+    dice.id="diceImg";
     var rollNum = Math.floor(Math.random()*6+1);
     globalNum = rollNum;
     console.log(rollNum);
