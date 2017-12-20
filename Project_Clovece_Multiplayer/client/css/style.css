@@ -4,15 +4,17 @@ body{
     height: 100%;
     width: 100%;
     background-image: url(../img/back.jpg);
+    background-size: cover;
     position: fixed;
 }
 .block
 {
-  width: 40px;
-  height: 40px;
+  width: 41px;
+  height: 41px;
   margin: 5px;
   float: left;
 }
+
 
 .redpawn
 {
@@ -38,14 +40,12 @@ cursor: pointer;
 
 #content
 {
-width: 600px;
-height: 600px;
-padding-left: 25px;
-margin: 0 auto;
-padding-top: 25px;
-padding-bottom: 50px;
-top: 50%;
-transform: translateY(6%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  margin: -280px 0 0 -300px;
 }
 
 #login
