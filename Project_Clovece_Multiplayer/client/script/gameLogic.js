@@ -5,6 +5,7 @@ var playerOnTurnRolls = 0;
 var playerOnTurn = "yellow";
 var playerMoved = true;
 var diceImg;
+var myMusic;
 var circle=document.createElement("img");
 circle.setAttribute("src", "/client/img/turn.png");
 
@@ -178,6 +179,8 @@ function generateGameboard()
     dice.setAttribute("src", "/client/img/img" + rollNum + ".png");
 	   document.getElementById("dice").appendChild(dice);
     dice.addEventListener("click",rollDice);
+    myMusic = new sound("/client/sounds/dice.mp3");
+    myMusic.play();
     playerMoved = false;
     isMovePossible(globalNum);
     }
@@ -452,24 +455,28 @@ function moveFromHome(fig,figure)
               circle = document.getElementById("activePlayer");
             document.getElementById("onturn4").innerHTML="";
             document.getElementById("onturn1").appendChild(circle);
+                 
             reGenerateDice();
             }
         else if(turn==2){
           circle = document.getElementById("activePlayer");
                 document.getElementById("onturn1").innerHTML="";
                 document.getElementById("onturn2").appendChild(circle);
+             
                 reGenerateDice();
         }
         else if(turn==3){
           circle = document.getElementById("activePlayer");
                 document.getElementById("onturn2").innerHTML="";
                 document.getElementById("onturn3").appendChild(circle);
+           
                 reGenerateDice();
         }
         else{
           circle = document.getElementById("activePlayer");
                 document.getElementById("onturn3").innerHTML="";
                 document.getElementById("onturn4").appendChild(circle);
+           
                 reGenerateDice();
         }
     }
@@ -665,3 +672,17 @@ function serverMoveOnBoard(pawn, pawnID, rollValue)
       }
     }
   }
+function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function(){
+        this.sound.play();
+    }
+    this.stop = function(){
+        this.sound.pause();
+    }
+}
